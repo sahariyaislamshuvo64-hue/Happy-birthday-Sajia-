@@ -13,21 +13,31 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a, #1e1b4b, #311042);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: radial-gradient(circle at top left, #2e1065, #0f172a, #020617);
+            background-size: 300% 300%;
+            animation: bgShift 12s ease infinite;
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        @keyframes gradientBG {
+        @keyframes bgShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Countdown Screen */
+        /* Glassmorphism Reusable Style */
+        .ios-glass {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 1. Countdown Screen */
         #countdown-screen {
             position: fixed;
             inset: 0;
@@ -35,27 +45,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(25px);
+            background: rgba(2, 6, 23, 0.92);
+            backdrop-filter: blur(30px);
         }
 
-        .glass-box {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 24px;
-            padding: 40px;
+        .timer-card {
+            padding: 40px 50px;
             text-align: center;
         }
 
         .timer-digits {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 3rem;
+            font-weight: 800;
             color: #f472b6;
-            margin-top: 10px;
+            margin-top: 15px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(244, 114, 182, 0.4);
         }
 
-        /* Screen 2: Cloth Banner Animation */
+        /* 2. Fabric Cloth Banner */
         #banner-screen {
             position: fixed;
             inset: 0;
@@ -63,134 +71,212 @@
             display: none;
             justify-content: center;
             align-items: flex-start;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.75);
         }
 
-        /* Fabric Banner Styling */
-        .cloth-banner {
-            width: 90%;
-            max-width: 550px;
-            background: linear-gradient(135deg, #d946ef, #ec4899, #be185d);
-            padding: 35px 20px;
+        .fabric-banner {
+            width: 88%;
+            max-width: 580px;
+            background: linear-gradient(135deg, #ec4899, #be185d, #831843);
+            padding: 45px 25px;
             text-align: center;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6), inset 0 -10px 20px rgba(0,0,0,0.2);
-            transform: translateY(-100%);
-            animation: dropCloth 2.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 25px 60px rgba(236, 72, 153, 0.4), inset 0 -12px 20px rgba(0, 0, 0, 0.3);
             position: relative;
-            border-left: 2px solid rgba(255,255,255,0.2);
-            border-right: 2px solid rgba(255,255,255,0.2);
-            border-bottom: 4px solid #9d174d;
+            transform: translateY(-100%);
+            animation: dropFabric 2.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 5px solid #9d174d;
         }
 
-        /* Fabric Pins on Top Corners */
-        .cloth-banner::before, .cloth-banner::after {
-            content: '';
+        /* Pins holding the cloth at the top */
+        .fabric-pin {
             position: absolute;
-            top: 10px;
-            width: 16px;
-            height: 16px;
-            background: radial-gradient(circle, #fde047 40%, #ca8a04 100%);
+            top: 12px;
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle, #fef08a, #ca8a04);
             border-radius: 50%;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
-        .cloth-banner::before { left: 15px; }
-        .cloth-banner::after { right: 15px; }
+        .pin-left { left: 20px; }
+        .pin-right { right: 20px; }
 
-        @keyframes dropCloth {
-            0% { transform: translateY(-100%) rotate(-3deg); }
-            60% { transform: translateY(8%) rotate(2deg); }
-            80% { transform: translateY(-3%) rotate(-1deg); }
+        @keyframes dropFabric {
+            0% { transform: translateY(-100%) rotate(-4deg); }
+            65% { transform: translateY(12%) rotate(2deg); }
+            85% { transform: translateY(-4%) rotate(-1deg); }
             100% { transform: translateY(0) rotate(0deg); }
         }
 
-        .cloth-banner h1 {
-            font-size: 2.2rem;
+        .fabric-banner h1 {
+            font-size: 2.4rem;
             font-weight: 800;
-            text-shadow: 0 3px 8px rgba(0,0,0,0.4);
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
-        /* Main Content Dashboard */
+        /* 3. Main Dashboard Content */
         #main-content {
             display: none;
-            padding: 30px 15px;
-            max-width: 900px;
+            padding: 40px 20px;
+            max-width: 1000px;
             margin: 0 auto;
             opacity: 0;
             transition: opacity 1.5s ease;
         }
 
-        /* Pin Board Section */
-        .board-container {
-            background: #8b5e34;
-            background-image: radial-gradient(rgba(0,0,0,0.15) 15%, transparent 16%);
-            background-size: 16px 16px;
-            border: 12px solid #5c3a21;
-            border-radius: 20px;
-            padding: 30px 15px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.6), 0 15px 35px rgba(0,0,0,0.5);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+        /* Profile Section */
+        .profile-card {
+            text-align: center;
+            padding: 35px;
+            margin-bottom: 35px;
         }
 
-        /* Pinned Cards */
-        .pin-card {
-            background: #fff;
-            color: #1e293b;
-            padding: 15px;
-            border-radius: 4px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .pin-card:nth-child(even) { transform: rotate(-2deg); }
-        .pin-card:nth-child(odd) { transform: rotate(2deg); }
-
-        .pin-card:hover {
-            transform: scale(1.05) rotate(0deg);
-            z-index: 10;
-        }
-
-        /* Push Pin Style */
-        .pin {
-            width: 14px;
-            height: 14px;
-            background: radial-gradient(circle, #ef4444 40%, #991b1b 100%);
+        .profile-img {
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            position: absolute;
-            top: -7px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 3px 5px rgba(0,0,0,0.4);
+            object-fit: cover;
+            border: 4px solid rgba(244, 114, 182, 0.6);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            margin-bottom: 15px;
         }
 
-        .pin-card img {
+        /* 4 Photo Grid with Notes */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .photo-card {
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        .photo-card img {
             width: 100%;
-            height: 160px;
+            height: 180px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+        }
+
+        .photo-card p {
+            font-size: 0.95rem;
+            text-align: center;
+            color: #e2e8f0;
+        }
+
+        /* Long Letter Note (500 words capacity) */
+        .long-note-card {
+            padding: 35px;
+            margin-bottom: 45px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #f1f5f9;
+        }
+
+        .long-note-card h2 {
+            color: #f472b6;
+            margin-bottom: 15px;
+        }
+
+        /* 10 Unique Cards Grid */
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .grid-10 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 18px;
+            margin-bottom: 50px;
+        }
+
+        .unique-card {
+            padding: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .unique-card:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .unique-card img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 16px;
             margin-bottom: 10px;
         }
 
-        .pin-card p {
-            font-size: 0.9rem;
-            text-align: center;
-            font-weight: 600;
+        /* Modern Pin Board */
+        .modern-pin-board {
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px dashed rgba(244, 114, 182, 0.3);
+            border-radius: 32px;
+            padding: 35px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
         }
 
-        /* Long Note Board Style */
-        .long-pin-note {
-            grid-column: 1 / -1;
-            background: #fef08a;
-            color: #451a03;
-            padding: 25px;
-            border-radius: 4px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        .pinned-item {
+            background: rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+            padding: 16px;
+            border-radius: 12px;
             position: relative;
-            line-height: 1.7;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .pinned-item:nth-child(even) { transform: rotate(-2deg); }
+        .pinned-item:nth-child(odd) { transform: rotate(2deg); }
+
+        .pinned-item:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 5;
+        }
+
+        .push-pin {
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #ef4444 40%, #991b1b 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+        }
+
+        .pinned-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .pinned-item p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
         }
 
         /* Lightbox Modal */
@@ -198,7 +284,7 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -207,98 +293,116 @@
         }
 
         .modal-content {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(20px);
-            padding: 20px;
-            border-radius: 20px;
-            max-width: 450px;
+            max-width: 480px;
             width: 100%;
+            padding: 25px;
             text-align: center;
         }
 
         .modal-content img {
             width: 100%;
-            max-height: 300px;
+            max-height: 320px;
             object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
 
     <div id="countdown-screen">
-        <div class="glass-box">
-            <h2>Special Moment Countdown</h2>
+        <div class="ios-glass timer-card">
+            <h2 style="color: #cbd5e1; font-weight: 500;">Special Moment Arriving...</h2>
             <div id="timer" class="timer-digits">00d 00h 00m 00s</div>
         </div>
     </div>
 
     <div id="banner-screen">
-        <div class="cloth-banner">
+        <div class="fabric-banner">
+            <div class="fabric-pin pin-left"></div>
+            <div class="fabric-pin pin-right"></div>
             <h1>Happy Birthday Sajia 💖</h1>
         </div>
     </div>
 
     <div id="main-content">
         
-        <h2 style="text-align: center; margin-bottom: 10px;"> Sajia's Birthday Memory Board 📌</h2>
+        <div class="ios-glass profile-card">
+            <img src="https://via.placeholder.com/150" alt="Sajia" class="profile-img">
+            <h1>Happy Sajia 🌸</h1>
+            <p style="color: #94a3b8; margin-top: 6px;">Wishing you endless joy & prosperity ✨</p>
+        </div>
 
-        <div class="board-container">
-            
-            <div class="long-pin-note">
-                <div class="pin" style="background: radial-gradient(circle, #3b82f6 40%, #1d4ed8 100%);"></div>
-                <h3 style="margin-bottom: 10px; color: #78350f;">A Special Message 💌</h3>
-                <p>
-                    প্রিয় সাজিয়া, জন্মদিনের অনেক অনেক শুভেচ্ছা! জীবনটা তোমার সব সুন্দর স্মৃতি ও হাসিতে ভরে উঠুক। তোমার স্বপ্নগুলো সত্যি হোক এবং সবসময় মনের মতো থেকো। আজকের এই বিশেষ দিনটি তোমার জীবনে বয়ে আনুক অনাবিল আনন্দ! 🌸
-                </p>
-            </div>
-
-            <div class="pin-card" onclick="openModal('https://via.placeholder.com/400', 'স্মৃতির প্রথম পাতা ✨')">
-                <div class="pin"></div>
+        <div class="grid-4">
+            <div class="ios-glass photo-card">
                 <img src="https://via.placeholder.com/300" alt="Memory 1">
-                <p>স্মৃতির প্রথম পাতা ✨</p>
+                <p>স্মৃতির প্রথম পাতা 🌸</p>
             </div>
-
-            <div class="pin-card" onclick="openModal('https://via.placeholder.com/400', 'তোমার সুন্দর হাসি 🌸')">
-                <div class="pin"></div>
+            <div class="ios-glass photo-card">
                 <img src="https://via.placeholder.com/300" alt="Memory 2">
-                <p>তোমার সুন্দর হাসি 🌸</p>
+                <p>তোমার সুন্দর হাসি ✨</p>
             </div>
-
-            <div class="pin-card" onclick="openModal('https://via.placeholder.com/400', 'বিশেষ মুহূর্ত 💫')">
-                <div class="pin"></div>
+            <div class="ios-glass photo-card">
                 <img src="https://via.placeholder.com/300" alt="Memory 3">
-                <p>বিশেষ মুহূর্ত 💫</p>
+                <p>বিশেষ কিছু মুহূর্ত 💫</p>
             </div>
-
-            <div class="pin-card" onclick="openModal('https://via.placeholder.com/400', 'সবসময় ভালো থেকো 🕊️')">
-                <div class="pin"></div>
+            <div class="ios-glass photo-card">
                 <img src="https://via.placeholder.com/300" alt="Memory 4">
                 <p>সবসময় ভালো থেকো 🕊️</p>
             </div>
+        </div>
 
+        <div class="ios-glass long-note-card">
+            <h2>A Special Birthday Letter 💌</h2>
+            <p>
+                প্রিয় সাজিয়া,<br><br>
+                আজকের এই বিশেষ দিনে তোমাকে জানাই জন্মদিনের অকৃত্রিম শুভেচ্ছা। তোমার জীবনের প্রতিটি অধ্যায় ভরে উঠুক অনাবিল আনন্দ, শান্তি আর সাফল্যে। এই গ্লাস কার্ডটির ভেতরে তুমি ৫০০ শব্দের বা তোমার মনের গভীরতম ভালোবাসার সুন্দর একটি দীর্ঘ চিঠি সাজিয়ে লিখে দিতে পারবে। তোমার মুখের মিষ্টি হাসিটা যেন সবসময় এমন ঝলমলে থাকে। জীবনের সকল বাঁধা পেরিয়ে তুমি পৌঁছে যাও তোমার স্বপ্নের শিখরে। শুভ জন্মদিন!
+            </p>
+        </div>
+
+        <h2 class="section-title">Memorable Cards Collection 🎨</h2>
+        <div class="grid-10">
             <script>
-                for(let i=1; i<=10; i++) {
+                for(let i = 1; i <= 10; i++) {
                     document.write(`
-                        <div class="pin-card" onclick="openModal('https://via.placeholder.com/400', 'Memory Note #${i}')">
-                            <div class="pin" style="background: radial-gradient(circle, #10b981 40%, #047857 100%);"></div>
+                        <div class="ios-glass unique-card" onclick="openModal('https://via.placeholder.com/400', 'Unique Card Note #${i}')">
                             <img src="https://via.placeholder.com/150" alt="Card ${i}">
-                            <p>Note #${i}</p>
+                            <p style="font-size: 0.85rem;">Card #${i}</p>
                         </div>
                     `);
                 }
             </script>
+        </div>
+
+        <h2 class="section-title">Pinned Memories Board 📌</h2>
+        <div class="modern-pin-board">
+            
+            <div class="pinned-item" onclick="openModal('https://via.placeholder.com/400', 'Pinned Special Note 1')">
+                <div class="push-pin"></div>
+                <img src="https://via.placeholder.com/300" alt="Pin 1">
+                <p>You Light Up My Life ✨</p>
+            </div>
+
+            <div class="pinned-item" onclick="openModal('https://via.placeholder.com/400', 'Pinned Special Note 2')">
+                <div class="push-pin" style="background: radial-gradient(circle, #3b82f6 40%, #1d4ed8 100%);"></div>
+                <img src="https://via.placeholder.com/300" alt="Pin 2">
+                <p>Sweet Memories 💖</p>
+            </div>
+
+            <div class="pinned-item" onclick="openModal('https://via.placeholder.com/400', 'Pinned Special Note 3')">
+                <div class="push-pin" style="background: radial-gradient(circle, #10b981 40%, #047857 100%);"></div>
+                <img src="https://via.placeholder.com/300" alt="Pin 3">
+                <p>Always Smile 🌸</p>
+            </div>
 
         </div>
 
     </div>
 
     <div id="modal" class="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="ios-glass modal-content" onclick="event.stopPropagation()">
             <img id="modal-img" src="" alt="Popup Image">
-            <p id="modal-text"></p>
+            <p id="modal-text" style="color: #f1f5f9;"></p>
         </div>
     </div>
 
@@ -325,11 +429,14 @@
         }, 1000);
 
         function triggerSequence() {
+            // Hide Countdown
             document.getElementById("countdown-screen").style.display = "none";
             
+            // Show Fabric Banner
             const bannerScreen = document.getElementById("banner-screen");
             bannerScreen.style.display = "flex";
 
+            // Wait 3 seconds, then reveal main dashboard smoothly
             setTimeout(() => {
                 bannerScreen.style.display = "none";
                 const mainContent = document.getElementById("main-content");
@@ -340,6 +447,7 @@
             }, 3000);
         }
 
+        // Modal Handlers
         function openModal(imgSrc, note) {
             document.getElementById("modal-img").src = imgSrc;
             document.getElementById("modal-text").innerText = note;

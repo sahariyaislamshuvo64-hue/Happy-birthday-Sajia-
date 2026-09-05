@@ -13,20 +13,20 @@
         }
 
         body {
-            background: #030308;
+            background: #020205;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* iOS 26 Glassmorphism Ultra Smooth */
-        .ios26-glass {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(35px) saturate(210%);
-            -webkit-backdrop-filter: blur(35px) saturate(210%);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 30px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        /* iOS Ultra Glassmorphism */
+        .ios-glass {
+            background: rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(35px) saturate(220%);
+            -webkit-backdrop-filter: blur(35px) saturate(220%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 28px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
         }
 
         /* Canvas Layers */
@@ -40,18 +40,18 @@
         }
 
         #starCanvas { z-index: 2; }
-        #fireworksCanvas { z-index: 100; }
+        #fireworksCanvas { z-index: 9000; }
 
         /* Lock Screen Countdown */
         #lockScreen {
             position: fixed;
             inset: 0;
-            background: rgba(4, 4, 10, 0.98);
+            background: rgba(3, 3, 8, 0.98);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 5000;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10000;
+            transition: opacity 0.8s ease;
         }
 
         .countdown-timer {
@@ -61,59 +61,86 @@
             background: linear-gradient(45deg, #ff2a6d, #05d9e8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 42, 109, 0.5);
+            text-shadow: 0 0 30px rgba(255, 42, 109, 0.6);
         }
 
-        /* Cat Drop Banner Container */
-        #catBannerWrapper {
+        /* Building Cat & Realistic Cloth Banner Dropper */
+        #buildingCatWrapper {
             position: fixed;
-            top: -450px;
+            top: -650px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 600px;
-            z-index: 6000;
+            max-width: 550px;
+            z-index: 8000;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: top 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: top 1.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        #catBannerWrapper.drop {
-            top: 30px;
+        #buildingCatWrapper.drop-cloth {
+            top: 20px;
         }
 
-        #catBannerWrapper.lift-up {
-            top: -500px;
+        #buildingCatWrapper.pull-up {
+            top: -700px;
         }
 
-        .cat-character {
-            font-size: 4rem;
-            margin-bottom: -15px;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
-            animation: catWiggle 1s infinite alternate ease-in-out;
+        .cat-on-building {
+            font-size: 4.5rem;
+            margin-bottom: -20px;
+            z-index: 2;
+            filter: drop-shadow(0 15px 10px rgba(0,0,0,0.8));
+            animation: catHang 1.5s infinite alternate ease-in-out;
         }
 
-        @keyframes catWiggle {
-            0% { transform: rotate(-5deg); }
-            100% { transform: rotate(5deg); }
+        @keyframes catHang {
+            0% { transform: translateY(0) rotate(-3deg); }
+            100% { transform: translateY(-5px) rotate(3deg); }
         }
 
-        .real-banner {
+        /* Real Fabric / Cloth Banner Style */
+        .cloth-banner {
             width: 100%;
-            padding: 25px;
+            padding: 35px 20px;
             text-align: center;
-            background: rgba(12, 12, 18, 0.95);
-            border: 2px solid #ff2a6d;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(255, 42, 109, 0.4);
+            background: linear-gradient(135deg, #11001c, #220033, #11001c);
+            border: 3px solid rgba(255, 42, 109, 0.8);
+            border-radius: 10px 10px 30px 30px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(255, 42, 109, 0.3);
+            position: relative;
+            transform-origin: top center;
+            animation: clothWave 3.5s infinite ease-in-out;
         }
 
-        .real-banner h1 {
-            font-size: 2.2rem;
+        /* Cloth Wrinkle / Folding Lines Effect */
+        .cloth-banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.03),
+                rgba(255, 255, 255, 0.03) 15px,
+                rgba(0, 0, 0, 0.15) 15px,
+                rgba(0, 0, 0, 0.15) 30px
+            );
+            pointer-events: none;
+        }
+
+        @keyframes clothWave {
+            0% { transform: rotate(0deg) skewX(0deg); }
+            25% { transform: rotate(1.5deg) skewX(1deg); }
+            75% { transform: rotate(-1.5deg) skewX(-1deg); }
+            100% { transform: rotate(0deg) skewX(0deg); }
+        }
+
+        .cloth-banner h1 {
+            font-size: 2.3rem;
             color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px #ff2a6d;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px #ff2a6d, 0 0 40px #ff2a6d;
         }
 
         /* Main Website Wrapper */
@@ -126,7 +153,7 @@
             padding-bottom: 80px;
         }
 
-        .billboard-bg {
+        .burj-bg {
             position: fixed;
             inset: 0;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), 
@@ -134,35 +161,35 @@
             z-index: -1;
         }
 
-        .billboard-billboard {
+        .building-billboard {
             position: absolute;
-            top: 8%;
+            top: 7%;
             left: 50%;
             transform: translateX(-50%);
             width: 320px;
             padding: 20px;
             text-align: center;
             border: 2px solid rgba(5, 217, 232, 0.8);
-            box-shadow: 0 0 30px rgba(5, 217, 232, 0.4);
+            box-shadow: 0 0 35px rgba(5, 217, 232, 0.5);
             border-radius: 16px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
         }
 
-        .billboard-billboard h2 {
+        .building-billboard h2 {
             color: #05d9e8;
             font-size: 1.5rem;
-            text-shadow: 0 0 10px #05d9e8;
-            animation: textPulse 3s infinite alternate;
+            text-shadow: 0 0 15px #05d9e8;
+            animation: textGlow 3s infinite alternate;
         }
 
-        @keyframes textPulse {
+        @keyframes textGlow {
             0% { opacity: 0.8; text-shadow: 0 0 10px #05d9e8; }
             100% { opacity: 1; text-shadow: 0 0 25px #ff2a6d; color: #ff2a6d; }
         }
 
-        /* Content Container */
+        /* Layout Container */
         .container {
-            margin-top: 300px;
+            margin-top: 310px;
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
@@ -180,7 +207,7 @@
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
-        /* Pin Sticky Note Board */
+        /* Sticky Notes Board */
         .sticky-board {
             padding: 30px;
             display: grid;
@@ -194,7 +221,7 @@
             border-radius: 20px;
             position: relative;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             border-top: 4px solid #05d9e8;
         }
 
@@ -211,7 +238,7 @@
             font-size: 1.3rem;
         }
 
-        /* 10 Pictures Grid Gallery */
+        /* 10 Photo Cards */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -242,15 +269,15 @@
             text-align: center;
         }
 
-        /* Modal Glass Popup */
+        /* Glass Popup Modal */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.82);
+            background: rgba(0, 0, 0, 0.85);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 8000;
+            z-index: 11000;
             padding: 20px;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -289,31 +316,31 @@
     </audio>
 
     <div id="lockScreen">
-        <div class="ios26-glass" style="padding: 40px; text-align: center;">
-            <h2 style="font-weight: 400; color: #aaa;">Sajia's Birthday Countdown</h2>
+        <div class="ios-glass" style="padding: 40px; text-align: center;">
+            <h2 style="font-weight: 400; color: #aaa;">Waiting for Sajia's Birthday...</h2>
             <div class="countdown-timer" id="timerDisplay">00d 00h 00m 00s</div>
         </div>
     </div>
 
-    <div id="catBannerWrapper">
-        <div class="cat-character">🐱🐾</div>
-        <div class="real-banner">
+    <div id="buildingCatWrapper">
+        <div class="cat-on-building">🐱🐾</div>
+        <div class="cloth-banner">
             <h1>HAPPY BIRTHDAY SAJIA</h1>
         </div>
     </div>
 
     <div class="main-content" id="mainContent">
-        <div class="billboard-bg"></div>
+        <div class="burj-bg"></div>
 
-        <div class="billboard-billboard">
+        <div class="building-billboard">
             <h2>HAPPY BIRTHDAY SAJIA</h2>
             <p style="font-size: 0.8rem; color: #ccc; margin-top: 5px;">আজও ভালবাসি তোমায়</p>
         </div>
 
         <div class="container">
             <div>
-                <h3 class="section-title">📌 Pinned Notes for Sajia</h3>
-                <div class="sticky-board ios26-glass">
+                <h3 class="section-title">📌 Pinned Sticky Notes</h3>
+                <div class="sticky-board ios-glass">
                     <div class="sticky-note" onclick="openModal('স্মৃতিগুলো সুন্দর', 'তোর সাথে কাটানো প্রতিটা মুহূর্ত আমার জীবনের সেরা উপহার।')">
                         <span class="pin">📌</span>
                         <h4>স্মৃতিগুলো সুন্দর</h4>
@@ -340,7 +367,7 @@
     </div>
 
     <div class="modal" id="modalWindow">
-        <div class="modal-content ios26-glass">
+        <div class="modal-content ios-glass">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <img id="modalImg" src="" style="width: 100%; height: 250px; object-fit: cover; border-radius: 16px; display: none; margin-bottom: 15px;" alt="Memory">
             <h3 id="modalTitle" style="color: #ff2a6d; margin-bottom: 10px;"></h3>
@@ -351,7 +378,7 @@
     <script>
         const targetDate = new Date("September 5, 2026 15:04:00").getTime();
 
-        // Falling Stars
+        // Canvas Background Stars
         const starCanvas = document.getElementById("starCanvas");
         const starCtx = starCanvas.getContext("2d");
         let stars = [];
@@ -381,7 +408,7 @@
         }
         animateStars();
 
-        // Real Fireworks (5 Seconds Duration)
+        // Ultra Realistic Fireworks with Gravity Spark Falling (Strict 5 Seconds)
         const fwCanvas = document.getElementById("fireworksCanvas");
         const fwCtx = fwCanvas.getContext("2d");
         let particles = [];
@@ -390,22 +417,26 @@
         window.addEventListener("resize", resizeFw);
         resizeFw();
 
-        function createExplosion(x, y) {
-            const colors = ['#ff2a6d', '#05d9e8', '#ffdf00', '#00ff88', '#ffffff'];
-            for (let i = 0; i < 50; i++) {
+        function createRealExplosion(x, y) {
+            const colors = ['#ff2a6d', '#05d9e8', '#ffdf00', '#00ff88', '#ffffff', '#ff7b00'];
+            for (let i = 0; i < 75; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 8 + 2;
                 particles.push({
                     x: x, y: y,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    radius: Math.random() * 3 + 1,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10,
-                    alpha: 1
+                    radius: Math.random() * 2.5 + 1,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    gravity: 0.15, // Physics Gravity pull down
+                    alpha: 1,
+                    decay: Math.random() * 0.015 + 0.01
                 });
             }
         }
 
         function animateFireworks() {
-            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';
             fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
 
             particles.forEach((p, idx) => {
@@ -417,9 +448,12 @@
                     fwCtx.fillStyle = p.color;
                     fwCtx.fill();
                     fwCtx.restore();
+
+                    // Physics math: Velocity + Gravity
                     p.x += p.vx;
                     p.y += p.vy;
-                    p.alpha -= 0.02;
+                    p.vy += p.gravity;
+                    p.alpha -= p.decay;
                 } else {
                     particles.splice(idx, 1);
                 }
@@ -428,17 +462,19 @@
         }
         animateFireworks();
 
-        function trigger5SecFireworks() {
+        function triggerRealistic5SecFireworks() {
             let timer = setInterval(() => {
-                createExplosion(Math.random() * fwCanvas.width, Math.random() * (fwCanvas.height * 0.5));
-            }, 250);
-            setTimeout(() => clearInterval(timer), 5000); // Strictly 5 seconds
+                createRealExplosion(Math.random() * fwCanvas.width, Math.random() * (fwCanvas.height * 0.5));
+            }, 200);
+            
+            // Stop generating new fireworks after 5 seconds
+            setTimeout(() => clearInterval(timer), 5000);
         }
 
         // Countdown Logic
         const timerDisplay = document.getElementById("timerDisplay");
         const lockScreen = document.getElementById("lockScreen");
-        const catBannerWrapper = document.getElementById("catBannerWrapper");
+        const buildingCatWrapper = document.getElementById("buildingCatWrapper");
         const mainContent = document.getElementById("mainContent");
         const bgAudio = document.getElementById("bgAudio");
 
@@ -463,27 +499,27 @@
             setTimeout(() => {
                 lockScreen.style.visibility = "hidden";
                 
-                // Cat drops banner
-                catBannerWrapper.classList.add("drop");
+                // Cat drops the cloth banner from top
+                buildingCatWrapper.classList.add("drop-cloth");
 
-                // Holds banner for 10 seconds then lifts it up
+                // Holds banner for 10 seconds then pulls it back up
                 setTimeout(() => {
-                    catBannerWrapper.classList.remove("drop");
-                    catBannerWrapper.classList.add("lift-up");
+                    buildingCatWrapper.classList.remove("drop-cloth");
+                    buildingCatWrapper.classList.add("pull-up");
 
-                    // Reveal Main Page & Trigger 5s Fireworks
+                    // Show Main Page & Trigger 5s Realistic Fireworks
                     mainContent.style.display = "block";
                     setTimeout(() => { mainContent.style.opacity = "1"; }, 50);
 
                     bgAudio.play().catch(e => console.log(e));
-                    trigger5SecFireworks();
+                    triggerRealistic5SecFireworks();
 
                 }, 10000);
 
             }, 800);
         }
 
-        // 10 Photos with 10 Notes Data
+        // 10 Pictures with 10 Individual Notes
         const photoGallery = [
             { img: "https://via.placeholder.com/400x300/ff2a6d/ffffff?text=Photo+1", note: "১. তোর সেই মিষ্টি হাসিটা আজও সেরা।" },
             { img: "https://via.placeholder.com/400x300/05d9e8/ffffff?text=Photo+2", note: "২. একসাথে কাটানো সুন্দর বিকেলগুলোর স্মৃতি।" },
@@ -500,7 +536,7 @@
         const galleryGrid = document.getElementById("galleryGrid");
         photoGallery.forEach((item, idx) => {
             const card = document.createElement("div");
-            card.className = "photo-card ios26-glass";
+            card.className = "photo-card ios-glass";
             card.onclick = () => openImageModal(item.img, `Memory #${idx + 1}`, item.note);
             card.innerHTML = `<img src="${item.img}" alt="Sajia Memory"><p>${item.note}</p>`;
             galleryGrid.appendChild(card);

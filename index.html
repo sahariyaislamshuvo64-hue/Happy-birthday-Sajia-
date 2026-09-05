@@ -1,1 +1,442 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sajia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
+        body {
+            background: #0d0d1a;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Canvas for Falling Stars */
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Countdown Lock Screen */
+        #lockScreen {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 20, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        .countdown-timer {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            color: #ff69b4;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+        }
+
+        /* Birthday Banner Drop */
+        #banner {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(45deg, #ff007f, #7928ca);
+            z-index: 999;
+            transition: top 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #banner.show {
+            top: 20px;
+        }
+
+        /* Main Container */
+        .main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        /* Burj Khalifa Background Feature */
+        .burj-bg {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200') center/cover no-repeat;
+            z-index: -1;
+        }
+
+        .burj-led-display {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            height: 280px;
+            padding: 10px;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 0, 128, 0.5); }
+            100% { box-shadow: 0 0 35px rgba(0, 212, 255, 0.8); }
+        }
+
+        .burj-led-display img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .burj-led-display h3 {
+            font-size: 1rem;
+            margin-top: 10px;
+            color: #fff;
+            text-shadow: 0 0 10px #ff007f;
+        }
+
+        /* Table & Main Interactive Theme */
+        .stage-container {
+            margin-top: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .table-setup {
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cake-icon {
+            font-size: 5rem;
+            filter: drop-shadow(0 0 15px rgba(255, 182, 193, 0.8));
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .letter-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .letter-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Photo Gallery Grid */
+        .gallery-title {
+            margin: 40px 0 20px;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .gallery-card {
+            padding: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .gallery-card p {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        /* Glass Modal Popup */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .modal-img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="starCanvas"></canvas>
+
+    <audio id="bgAudio" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-155461.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="lockScreen">
+        <h2 style="font-weight: 400; color: #ccc;">Counting down for Sajia...</h2>
+        <div class="countdown-timer" id="timerDisplay">00d 00h 00m 00s</div>
+    </div>
+
+    <div id="banner" class="glass-card">
+        ✨ HAPPY BIRTHDAY SAJIA ✨
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="burj-bg"></div>
+
+        <div class="burj-led-display glass-card">
+            <img id="adImage" src="https://via.placeholder.com/200x180/ff758c/ffffff?text=Sajia+Picture+1" alt="Sajia">
+            <h3>Happy Birthday Sajia</h3>
+        </div>
+
+        <div class="stage-container">
+            <div class="table-setup glass-card">
+                <div class="cake-icon">🎂</div>
+                <h2 style="margin-top: 10px;">Happy Birthday My Love</h2>
+                <button class="letter-btn" onclick="openLetter()">📜 Open My Letter</button>
+            </div>
+
+            <h3 class="gallery-title">Memories with Sajia</h3>
+            <div class="gallery-grid">
+                <div class="gallery-card glass-card" onclick="openImageModal('https://via.placeholder.com/500x400/ff758c/ffffff?text=Memory+1', 'তোর সেই মিষ্টি হাসি যা আমি কখনো ভুলব না।')">
+                    <img src="https://via.placeholder.com/300x200/ff758c/ffffff?text=Memory+1" alt="Memory">
+                    <p>তোর সেই মিষ্টি হাসি...</p>
+                </div>
+                <div class="gallery-card glass-card" onclick="openImageModal('https://via.placeholder.com/500x400/ff758c/ffffff?text=Memory+2', 'একসাথে কাটানো সুন্দর মুহূর্তগুলো আজও মনে পড়ে।')">
+                    <img src="https://via.placeholder.com/300x200/ff758c/ffffff?text=Memory+2" alt="Memory">
+                    <p>একসাথে কাটানো মুহূর্ত...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="letterModal">
+        <div class="modal-content glass-card">
+            <span class="close-btn" onclick="closeModal('letterModal')">&times;</span>
+            <h2 style="color: #ff69b4; margin-bottom: 15px;">Happy Birthday Sajia!</h2>
+            <p style="line-height: 1.6; text-align: left; color: #eee;" id="customLetterText">
+                শুভ জন্মদিন সাজিয়া। আজও তোকে অনেক ভালোবাসি। হয়তো আজ আমরা একসাথে নেই, কিন্তু তোর জন্মদিনে তোর সব স্বপ্ন পূরণ হোক—এই দোয়াই করি। আই লাভ ইউ সাজিয়া! ❤️
+            </p>
+        </div>
+    </div>
+
+    <div class="modal" id="imageModal">
+        <div class="modal-content glass-card">
+            <span class="close-btn" onclick="closeModal('imageModal')">&times;</span>
+            <img id="modalImgDisplay" class="modal-img" src="" alt="Sajia">
+            <p id="modalNoteText" style="line-height: 1.5; color: #fff;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Set target date: 5-09-2026 3:10 PM
+        const targetDate = new Date("September 5, 2026 15:10:00").getTime();
+
+        // Canvas Falling Stars Animation
+        const canvas = document.getElementById("starCanvas");
+        const ctx = canvas.getContext("2d");
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        for (let i = 0; i < 80; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 1,
+                speed: Math.random() * 1.5 + 0.5
+            });
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#ffffff";
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                star.y += star.speed;
+                if (star.y > canvas.height) {
+                    star.y = 0;
+                    star.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(animateStars);
+        }
+        animateStars();
+
+        // Countdown System
+        const timerDisplay = document.getElementById("timerDisplay");
+        const lockScreen = document.getElementById("lockScreen");
+        const mainContent = document.getElementById("mainContent");
+        const banner = document.getElementById("banner");
+        const bgAudio = document.getElementById("bgAudio");
+
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference <= 0) {
+                clearInterval(countdownInterval);
+                unlockWebsite();
+            } else {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                timerDisplay.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }, 1000);
+
+        function unlockWebsite() {
+            lockScreen.style.opacity = "0";
+            setTimeout(() => {
+                lockScreen.style.visibility = "hidden";
+                mainContent.style.display = "block";
+                setTimeout(() => { mainContent.style.opacity = "1"; }, 50);
+                
+                // Show banner animation
+                banner.classList.add("show");
+
+                // Play Audio
+                bgAudio.play().catch(e => console.log("Autoplay blocked:", e));
+            }, 1000);
+        }
+
+        // Burj Khalifa Billboard Image Rotation
+        const adImages = [
+            "https://via.placeholder.com/200x180/ff758c/ffffff?text=Sajia+Picture+1",
+            "https://via.placeholder.com/200x180/7928ca/ffffff?text=Sajia+Picture+2",
+            "https://via.placeholder.com/200x180/00d4ff/ffffff?text=Sajia+Picture+3"
+        ];
+        let currentAdIndex = 0;
+        setInterval(() => {
+            currentAdIndex = (currentAdIndex + 1) % adImages.length;
+            document.getElementById("adImage").src = adImages[currentAdIndex];
+        }, 3000);
+
+        // Modal Functions
+        function openLetter() {
+            document.getElementById("letterModal").classList.add("active");
+        }
+
+        function openImageModal(imgSrc, noteText) {
+            document.getElementById("modalImgDisplay").src = imgSrc;
+            document.getElementById("modalNoteText").innerText = noteText;
+            document.getElementById("imageModal").classList.add("active");
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove("active");
+        }
+    </script>
+</body>
+      </html>

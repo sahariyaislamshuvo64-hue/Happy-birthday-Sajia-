@@ -13,23 +13,23 @@
         }
 
         body {
-            background: #080810;
+            background: #05050d;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* iOS Glassmorphism Base Class */
+        /* Ultimate Ultra-Fast iOS Glass Effect */
         .ios-glass {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
-        /* Falling Stars Effect */
+        /* Falling Stars Canvas */
         #starCanvas {
             position: fixed;
             top: 0;
@@ -37,56 +37,72 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 10;
+            z-index: 5;
+        }
+
+        /* Fireworks Canvas */
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
         }
 
         /* Lock Screen / Countdown */
         #lockScreen {
             position: fixed;
             inset: 0;
-            background: rgba(5, 5, 12, 0.96);
+            background: rgba(5, 5, 12, 0.98);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 5000;
             transition: opacity 1s ease, visibility 1s;
         }
 
         .countdown-box {
-            padding: 30px 40px;
+            padding: 40px;
             text-align: center;
         }
 
         .countdown-timer {
-            font-size: 2.8rem;
-            font-weight: 700;
+            font-size: 3rem;
+            font-weight: 800;
             margin-top: 15px;
-            color: #ff5e97;
-            text-shadow: 0 0 20px rgba(255, 94, 151, 0.6);
+            color: #ff3366;
+            text-shadow: 0 0 25px rgba(255, 51, 102, 0.7);
         }
 
-        /* Top Dropping Banner (Shows for 10s) */
-        #topBanner {
+        /* Black Real Drop Banner (Disappears after 4 sec) */
+        #dropBanner {
             position: fixed;
-            top: -250px;
+            top: -300px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
             max-width: 650px;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
             color: #fff;
-            background: linear-gradient(135deg, #ff007f, #7928ca);
-            z-index: 3000;
-            transition: top 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 40px rgba(255, 0, 127, 0.5);
+            background: rgba(15, 15, 20, 0.95);
+            border: 2px solid rgba(255, 51, 102, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            z-index: 6000;
+            transition: top 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        #topBanner.show {
-            top: 40px;
+        #dropBanner.drop {
+            top: 60px;
+        }
+
+        #dropBanner.fly-up {
+            top: -300px;
         }
 
         /* Main Content */
@@ -98,128 +114,110 @@
             min-height: 100vh;
         }
 
-        /* Burj Khalifa Background with Building LED Text */
-        .burj-bg {
+        /* Background & Animated Billboard */
+        .billboard-bg {
             position: fixed;
             inset: 0;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), 
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), 
                         url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1400') center/cover no-repeat;
             z-index: -1;
         }
 
-        /* Tower LED Lights Animation */
-        .burj-tower-led {
+        .billboard-frame {
             position: absolute;
-            top: 12%;
+            top: 10%;
             left: 50%;
             transform: translateX(-50%);
-            width: 140px;
-            height: 380px;
+            width: 320px;
+            height: 140px;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            border-left: 2px solid rgba(0, 212, 255, 0.5);
-            border-right: 2px solid rgba(0, 212, 255, 0.5);
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.75);
+            border: 3px solid #ff3366;
+            box-shadow: 0 0 35px rgba(255, 51, 102, 0.6);
+            border-radius: 12px;
         }
 
-        .burj-led-text {
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: #fff;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            animation: towerGlow 2s infinite alternate;
+        .billboard-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ff3366;
+            text-shadow: 0 0 15px #ff3366, 0 0 30px #ff3366;
+            transition: opacity 0.8s ease;
         }
 
-        @keyframes towerGlow {
-            0% {
-                color: #ff007f;
-                text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 40px #ff007f;
-            }
-            50% {
-                color: #00d4ff;
-                text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff;
-            }
-            100% {
-                color: #ffdf00;
-                text-shadow: 0 0 10px #ffdf00, 0 0 20px #ffdf00, 0 0 40px #ffdf00;
-            }
-        }
-
-        /* Ocean Side Beach Table Theme */
-        .sea-stage {
-            margin-top: 520px;
+        /* Sections Wrapper */
+        .container {
+            margin-top: 320px;
+            padding: 30px 20px 80px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 40px 20px 80px;
-            background: linear-gradient(to top, rgba(0,15,35,0.9), transparent);
+            gap: 50px;
         }
 
-        .table-setup {
-            width: 100%;
-            max-width: 550px;
-            padding: 35px 20px;
+        /* Section Title */
+        .section-title {
+            font-size: 1.8rem;
             text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Pinned Note Board */
+        .pin-board {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .pin-paper {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 16px;
             position: relative;
-        }
-
-        .cake-container {
-            font-size: 5.5rem;
-            filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.9));
-            animation: floatCake 3s ease-in-out infinite;
-        }
-
-        @keyframes floatCake {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        .cake-title {
-            margin-top: 10px;
-            font-size: 1.6rem;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-        }
-
-        .letter-btn {
-            margin-top: 25px;
-            padding: 14px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 40px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
+            border-top: 4px solid #ff3366;
         }
 
-        .letter-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.05);
+        .pin-paper:hover {
+            transform: scale(1.05) rotate(1deg);
         }
 
-        /* 10 Pictures Grid Gallery */
-        .gallery-section {
-            width: 100%;
-            max-width: 1000px;
-            margin-top: 50px;
-            text-align: center;
+        .pin-icon {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
         }
 
-        .gallery-title {
-            font-size: 2rem;
-            margin-bottom: 25px;
-            color: #fff;
-            text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+        .pin-paper p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #eee;
         }
 
+        /* 500-Word Letter Section */
+        .letter-box {
+            padding: 40px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #f0f0f0;
+            max-height: 450px;
+            overflow-y: auto;
+            border-left: 5px solid #ff3366;
+        }
+
+        /* Photo Gallery Grid */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -229,12 +227,11 @@
         .gallery-card {
             padding: 12px;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .gallery-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
         }
 
         .gallery-card img {
@@ -247,21 +244,19 @@
         .gallery-card p {
             margin-top: 10px;
             font-size: 0.85rem;
-            color: #e0e0e0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: #ddd;
+            text-align: center;
         }
 
-        /* iOS Glass Modal Window */
+        /* Modal Popup */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 4000;
+            z-index: 7000;
             padding: 20px;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -293,7 +288,7 @@
 
         .modal-img {
             width: 100%;
-            max-height: 320px;
+            max-height: 300px;
             object-fit: cover;
             border-radius: 16px;
             margin-bottom: 15px;
@@ -304,123 +299,203 @@
 
     <canvas id="starCanvas"></canvas>
 
+    <canvas id="fireworksCanvas"></canvas>
+
     <audio id="bgAudio" loop preload="auto">
         <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-155461.mp3" type="audio/mpeg">
     </audio>
 
     <div id="lockScreen">
         <div class="countdown-box ios-glass">
-            <h2 style="font-weight: 400; color: #ddd;">Waiting for Sajia's Special Moment...</h2>
+            <h2 style="font-weight: 400; color: #ddd;">Waiting for Sajia's Birthday...</h2>
             <div class="countdown-timer" id="timerDisplay">00d 00h 00m 00s</div>
         </div>
     </div>
 
-    <div id="topBanner" class="ios-glass">
+    <div id="dropBanner">
         🎉 HAPPY BIRTHDAY SAJIA 🎉
     </div>
 
     <div class="main-content" id="mainContent">
-        <div class="burj-bg"></div>
-
-        <div class="burj-tower-led">
-            <div class="burj-led-text">HAPPY BIRTHDAY SAJIA</div>
+        <div class="billboard-bg"></div>
+        <div class="billboard-frame">
+            <div class="billboard-text" id="billboardText">HAPPY BIRTHDAY SAJIA</div>
         </div>
 
-        <div class="sea-stage">
-            <div class="table-setup ios-glass">
-                <div class="cake-container">🎂</div>
-                <h2 class="cake-title">Happy Birthday Sajia</h2>
-                <button class="letter-btn" onclick="openLetter()">📜 Open My Letter</button>
+        <div class="container">
+
+            <div>
+                <h3 class="section-title">📌 Notes for You</h3>
+                <div class="pin-board ios-glass">
+                    <div class="pin-paper" onclick="openTextModal('স্মৃতিগুলো খুব সুন্দর ছিল', 'তোর সাথে কাটানো প্রতিটা মুহূর্ত আমার জীবনের সবচেয়ে সুন্দর অংশ ছিল। সময়ের সাথে সাথে পরিস্থিতি হয়তো বদলেছে, কিন্তু তোর দেওয়া মিষ্টি অনুভূতিগুলো আজও একদম তাজা।')">
+                        <span class="pin-icon">📌</span>
+                        <p><strong>স্মৃতিগুলো খুব সুন্দর...</strong><br>তোর সাথে কাটানো প্রতিটা মুহূর্ত...</p>
+                    </div>
+                    <div class="pin-paper" onclick="openTextModal('তোর হাসির শব্দ', 'তোর সেই খিলখিল করে হেসে ওঠার শব্দটা আমি কখনো ভুলতে পারব না। ওই হাসির আলোতেই আমার পুরোটা দিন সুন্দর হয়ে যেত।')">
+                        <span class="pin-icon">📌</span>
+                        <p><strong>তোর হাসির শব্দ...</strong><br>তোর সেই খিলখিল করে হেসে ওঠার...</p>
+                    </div>
+                    <div class="pin-paper" onclick="openTextModal('শুভকামনা সবসময়', 'তুই যেখানেই থাকিস, যেমন অবস্থাতেই থাকিস—আমার হৃদয় থেকে তোর জন্য সবসময় অঝোর ধারায় শুভকামনা থাকবে।')">
+                        <span class="pin-icon">📌</span>
+                        <p><strong>শুভকামনা সবসময়...</strong><br>তুই যেখানেই থাকিস না কেন...</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="gallery-section">
-                <h3 class="gallery-title">Sweet Memories with Sajia</h3>
+            <div>
+                <h3 class="section-title">📜 My Special Letter to Sajia</h3>
+                <div class="letter-box ios-glass">
+                    <h2 style="color: #ff3366; margin-bottom: 15px; text-align: center;">প্রিয় সাজিয়া,</h2>
+                    <p>
+                        শুভ জন্মদিন! আজকের এই বিশেষ দিনটি তোর জীবনের অন্যতম একটি সুন্দর দিন। দূরত্ব কতখানি তৈরি হয়েছে বা সম্পর্কের নাম কী দাঁড়িয়েছে, তা দিয়ে আমার হৃদয়ের সত্য অনুভূতির পরিমাপ করা সম্ভব নয়। তুই যেমন আগে বিশেষ একজন ছিলি, আজও আমার মনের কোণে তুই তেমনই বিশেষ এবং অনন্য।<br><br>
+                        আজকে তোর জন্মদিনে আমি পেছনে ফিরে তাকাই, যখন তুই আমার প্রতিটি দিনের সেরা আলো ছিলি। তোর সাথে কাটানো সুন্দর বিকেলগুলো, কোনো বিশেষ কারণ ছাড়াই গল্প করা এবং হঠাৎ তোর মিষ্টি হাসির ঝলক—এসব কিছু আজও আমার মস্তিষ্কের কোষে কোষে সতেজ রয়ে গেছে। হয়তো মানুষ বদলে যায়, সময় বদলে যায়, পরিস্থিতি জীবনকে নানা বাঁকে নিয়ে দাঁড় করায়; কিন্তু শুভস্মৃতিগুলো কখনো ধূসর হয় না।<br><br>
+                        আমি চাই তুই সফলতার সর্বোচ্চ শিখরে পৌঁছাস। তোর জীবনের প্রতিটি পথচলা সুন্দর ও নিরাপদ হোক। তোর চোখের প্রতিটি পানির ফোটা যেন আনন্দের কান্না হয়ে ঝরে। জীবনের সব কঠিন পরিস্থিতিতেও তুই যেন হাসিমুখে জয়ী হতে পারিস, সেই শুভকামনাই রইল।<br><br>
+                        আমি তোকে কোনো শর্ত বা বাধ্যবাধকতা ছাড়াই ভালোবেসেছি, আজও বাসি। হয়তো তোকে প্রকাশ করার অধিকার আমার আর নেই, কিন্তু দূর থেকে তোকে সুন্দর জীবনের দোয়ায় জড়িয়ে রাখার অধিকারটুকু কেউ কেড়ে নিতে পারবে না। ভালো থাকিস সাজিয়া, অনেক অনেক ভালো থাকিস। তোর জীবনের প্রতিটি বছর নিয়ে আসুক অনাবিল আনন্দ আর ভালোবাসা।<br><br>
+                        <strong>— আজ এবং সারাজীবন তোকে ভালোবেসে যাওয়া একজন।</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="section-title">📸 Memories Gallery</h3>
                 <div class="gallery-grid" id="galleryGrid">
                     </div>
             </div>
+
         </div>
     </div>
 
-    <div class="modal" id="letterModal">
+    <div class="modal" id="modalWindow">
         <div class="modal-content ios-glass">
-            <span class="close-btn" onclick="closeModal('letterModal')">&times;</span>
-            <h2 style="color: #ff5e97; margin-bottom: 15px;">Happy Birthday Sajia!</h2>
-            <p style="line-height: 1.7; text-align: left; color: #f0f0f0;">
-                শুভ জন্মদিন সাজিয়া! আজ তোমার এই বিশেষ দিনে তোমাকে অনেক অনেক শুভেচ্ছা। হয়তো সময় অনেক কিছু বদলে দিয়েছে, কিন্তু তোমার প্রতি আমার ভালোবাসা ও সম্মান আজও আগের মতোই আছে। জীবন তোমাকে সবখানের সেরা সুখটুকু এনে দিক। আই লাভ ইউ সাজিয়া! ❤️
-            </p>
-        </div>
-    </div>
-
-    <div class="modal" id="imageModal">
-        <div class="modal-content ios-glass">
-            <span class="close-btn" onclick="closeModal('imageModal')">&times;</span>
-            <img id="modalImgDisplay" class="modal-img" src="" alt="Sajia">
-            <p id="modalNoteText" style="line-height: 1.6; color: #fff; font-size: 1.05rem;"></p>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <img id="modalImg" class="modal-img" src="" style="display: none;" alt="Memory">
+            <h3 id="modalTitle" style="color: #ff3366; margin-bottom: 10px;"></h3>
+            <p id="modalBody" style="line-height: 1.6; color: #f0f0f0;"></p>
         </div>
     </div>
 
     <script>
-        // Set target date: September 5, 2026, 3:04 PM
+        // Target Date: September 5, 2026 3:04 PM
         const targetDate = new Date("September 5, 2026 15:04:00").getTime();
 
-        // Canvas Falling Stars Animation
-        const canvas = document.getElementById("starCanvas");
-        const ctx = canvas.getContext("2d");
+        // Falling Stars Logic
+        const starCanvas = document.getElementById("starCanvas");
+        const starCtx = starCanvas.getContext("2d");
         let stars = [];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        function resizeStarCanvas() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
         }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
+        window.addEventListener("resize", resizeStarCanvas);
+        resizeStarCanvas();
 
         for (let i = 0; i < 90; i++) {
             stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
+                x: Math.random() * starCanvas.width,
+                y: Math.random() * starCanvas.height,
                 size: Math.random() * 2 + 1,
                 speed: Math.random() * 1.5 + 0.5
             });
         }
 
         function animateStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#ffffff";
+            starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+            starCtx.fillStyle = "#ffffff";
             stars.forEach(star => {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
+                starCtx.beginPath();
+                starCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                starCtx.fill();
                 star.y += star.speed;
-                if (star.y > canvas.height) {
+                if (star.y > starCanvas.height) {
                     star.y = 0;
-                    star.x = Math.random() * canvas.width;
+                    star.x = Math.random() * starCanvas.width;
                 }
             });
             requestAnimationFrame(animateStars);
         }
         animateStars();
 
+        // Fireworks Fireworks Animation System
+        const fwCanvas = document.getElementById("fireworksCanvas");
+        const fwCtx = fwCanvas.getContext("2d");
+        let particles = [];
+
+        function resizeFwCanvas() {
+            fwCanvas.width = window.innerWidth;
+            fwCanvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resizeFwCanvas);
+        resizeFwCanvas();
+
+        function createFirework(x, y) {
+            const colors = ['#ff3366', '#00d4ff', '#ffdf00', '#00ff88', '#ffffff'];
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: x, y: y,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    radius: Math.random() * 3 + 1,
+                    velocity: {
+                        x: (Math.random() - 0.5) * 8,
+                        y: (Math.random() - 0.5) * 8
+                    },
+                    alpha: 1
+                });
+            }
+        }
+
+        function animateFireworks() {
+            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+
+            particles.forEach((p, index) => {
+                if (p.alpha > 0) {
+                    fwCtx.save();
+                    fwCtx.globalAlpha = p.alpha;
+                    fwCtx.beginPath();
+                    fwCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    fwCtx.fillStyle = p.color;
+                    fwCtx.fill();
+                    fwCtx.restore();
+
+                    p.x += p.velocity.x;
+                    p.y += p.velocity.y;
+                    p.alpha -= 0.015;
+                } else {
+                    particles.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animateFireworks);
+        }
+        animateFireworks();
+
+        function triggerFireworksBurst() {
+            let interval = setInterval(() => {
+                createFirework(Math.random() * fwCanvas.width, Math.random() * (fwCanvas.height * 0.6));
+            }, 300);
+            setTimeout(() => clearInterval(interval), 10000); // Fireworks burst for 10 sec
+        }
+
         // Countdown System
         const timerDisplay = document.getElementById("timerDisplay");
         const lockScreen = document.getElementById("lockScreen");
         const mainContent = document.getElementById("mainContent");
-        const topBanner = document.getElementById("topBanner");
+        const dropBanner = document.getElementById("dropBanner");
         const bgAudio = document.getElementById("bgAudio");
 
         const countdownInterval = setInterval(() => {
             const now = new Date().getTime();
-            const difference = targetDate - now;
+            const diff = targetDate - now;
 
-            if (difference <= 0) {
+            if (diff <= 0) {
                 clearInterval(countdownInterval);
                 unlockWebsite();
             } else {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                timerDisplay.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                timerDisplay.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
             }
         }, 1000);
 
@@ -428,60 +503,85 @@
             lockScreen.style.opacity = "0";
             setTimeout(() => {
                 lockScreen.style.visibility = "hidden";
-                mainContent.style.display = "block";
-                setTimeout(() => { mainContent.style.opacity = "1"; }, 50);
+                
+                // Show Drop Banner first
+                dropBanner.classList.add("drop");
 
-                // Play Background Birthday Music
-                bgAudio.play().catch(e => console.log("Autoplay blocked:", e));
-
-                // Drop Banner Animation for 10 Seconds
-                topBanner.classList.add("show");
+                // Banner stays 4 seconds and then flies up away
                 setTimeout(() => {
-                    topBanner.classList.remove("show");
-                }, 10000);
+                    dropBanner.classList.remove("drop");
+                    dropBanner.classList.add("fly-up");
+
+                    // Show main website page & start fireworks
+                    mainContent.style.display = "block";
+                    setTimeout(() => { mainContent.style.opacity = "1"; }, 50);
+
+                    // Audio & Fireworks Trigger
+                    bgAudio.play().catch(e => console.log(e));
+                    triggerFireworksBurst();
+
+                }, 4000);
 
             }, 1000);
         }
 
-        // Render 10 Photo Memory Cards
-        const photoData = [
-            { img: "https://via.placeholder.com/400x300/ff758c/ffffff?text=Sajia+Photo+1", note: "তোর সেই প্রথম মিষ্টি হাসির মুহূর্তটি আজও মনে আছে।" },
-            { img: "https://via.placeholder.com/400x300/7928ca/ffffff?text=Sajia+Photo+2", note: "একসাথে কাটানো সুন্দর বিকেলগুলো স্মৃতি হয়ে রয়ে গেল।" },
-            { img: "https://via.placeholder.com/400x300/00d4ff/ffffff?text=Sajia+Photo+3", note: "তোর প্রতিটি কথা আজও আমার হৃদয় ছুঁয়ে যায়।" },
-            { img: "https://via.placeholder.com/400x300/ff007f/ffffff?text=Sajia+Photo+4", note: "তোর এই অভিমানী মুখটা বড্ড প্রিয় ছিল।" },
-            { img: "https://via.placeholder.com/400x300/ffdf00/ffffff?text=Sajia+Photo+5", note: "শুভ হোক তোর জীবনের প্রতিটি নতুন পথচলা।" },
-            { img: "https://via.placeholder.com/400x300/00ff88/ffffff?text=Sajia+Photo+6", note: "সবসময় এভাবেই হেসে-খেলে ভালো থাকিস সাজিয়া।" },
-            { img: "https://via.placeholder.com/400x300/ff5e97/ffffff?text=Sajia+Photo+7", note: "তোর চোখের সেই চাহনি আমি কখনো ভুলব না।" },
-            { img: "https://via.placeholder.com/400x300/8a2be2/ffffff?text=Sajia+Photo+8", note: "দূরত্ব তৈরি হলেও তোর স্থান চিরকাল ভালোবাসার।" },
-            { img: "https://via.placeholder.com/400x300/00bfff/ffffff?text=Sajia+Photo+9", note: "তোর স্বপ্নগুলো সত্যি হোক, এই প্রার্থনাই করি।" },
-            { img: "https://via.placeholder.com/400x300/ff1493/ffffff?text=Sajia+Photo+10", note: "আই লাভ ইউ সাজিয়া—আজ এবং সারাজীবন।" }
+        // Rotating Billboard Text every 30 seconds
+        const billboardText = document.getElementById("billboardText");
+        let toggleState = false;
+        setInterval(() => {
+            billboardText.style.opacity = "0";
+            setTimeout(() => {
+                toggleState = !toggleState;
+                billboardText.innerText = toggleState ? "আজও ভালবাসি তোমায়" : "HAPPY BIRTHDAY SAJIA";
+                billboardText.style.opacity = "1";
+            }, 800);
+        }, 30000);
+
+        // Render 10 Photo Cards
+        const photos = [
+            { img: "https://via.placeholder.com/400x300/ff3366/ffffff?text=Photo+1", note: "তোর প্রথম মিষ্টি হাসির মুহূর্ত।" },
+            { img: "https://via.placeholder.com/400x300/00d4ff/ffffff?text=Photo+2", note: "একসাথে কাটানো বিকেলের স্মৃতি।" },
+            { img: "https://via.placeholder.com/400x300/ffdf00/ffffff?text=Photo+3", note: "তোর অভিমানী চেহারাটা বড্ড প্রিয় ছিল।" },
+            { img: "https://via.placeholder.com/400x300/00ff88/ffffff?text=Photo+4", note: "যেখান থেকেই তোকে দেখি, সব সুন্দর।" },
+            { img: "https://via.placeholder.com/400x300/ff3366/ffffff?text=Photo+5", note: "তোর চোখের সেই চাহনিটা আজও ভুলিনি।" },
+            { img: "https://via.placeholder.com/400x300/7928ca/ffffff?text=Photo+6", note: "তুই ছিলিস আমার সব গল্পের কেন্দ্রবিন্দু।" },
+            { img: "https://via.placeholder.com/400x300/00d4ff/ffffff?text=Photo+7", note: "তোর সুরের মতো কণ্ঠটা আজও মনে বাজে।" },
+            { img: "https://via.placeholder.com/400x300/ffdf00/ffffff?text=Photo+8", note: "শুভ হোক তোর ভবিষ্যতের প্রতিটা ধাপ।" },
+            { img: "https://via.placeholder.com/400x300/00ff88/ffffff?text=Photo+9", note: "তোর হাসিতেই আমার পৃথিবীর আলো।" },
+            { img: "https://via.placeholder.com/400x300/ff3366/ffffff?text=Photo+10", note: "আই লাভ ইউ সাজিয়া—আজ এবং সারাজীবন।" }
         ];
 
         const galleryGrid = document.getElementById("galleryGrid");
-        photoData.forEach((item, index) => {
+        photos.forEach((item, idx) => {
             const card = document.createElement("div");
             card.className = "gallery-card ios-glass";
-            card.onclick = () => openImageModal(item.img, item.note);
+            card.onclick = () => openImageModal(item.img, `Memory #${idx + 1}`, item.note);
             card.innerHTML = `
-                <img src="${item.img}" alt="Sajia Memory ${index + 1}">
+                <img src="${item.img}" alt="Memory ${idx + 1}">
                 <p>${item.note}</p>
             `;
             galleryGrid.appendChild(card);
         });
 
         // Modal Functions
-        function openLetter() {
-            document.getElementById("letterModal").classList.add("active");
+        function openTextModal(title, body) {
+            document.getElementById("modalImg").style.display = "none";
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalBody").innerText = body;
+            document.getElementById("modalWindow").classList.add("active");
         }
 
-        function openImageModal(imgSrc, noteText) {
-            document.getElementById("modalImgDisplay").src = imgSrc;
-            document.getElementById("modalNoteText").innerText = noteText;
-            document.getElementById("imageModal").classList.add("active");
+        function openImageModal(imgSrc, title, body) {
+            const imgElem = document.getElementById("modalImg");
+            imgElem.src = imgSrc;
+            imgElem.style.display = "block";
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalBody").innerText = body;
+            document.getElementById("modalWindow").classList.add("active");
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove("active");
+        function closeModal() {
+            document.getElementById("modalWindow").classList.remove("active");
         }
     </script>
 </body>

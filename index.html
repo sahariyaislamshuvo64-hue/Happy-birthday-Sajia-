@@ -9,27 +9,27 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            background: #0d0d1a;
+            background: #080810;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* Glassmorphism Styles */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        /* iOS Glassmorphism Base Class */
+        .ios-glass {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
-        /* Canvas for Falling Stars */
+        /* Falling Stars Effect */
         #starCanvas {
             position: fixed;
             top: 0;
@@ -40,140 +40,163 @@
             z-index: 10;
         }
 
-        /* Countdown Lock Screen */
+        /* Lock Screen / Countdown */
         #lockScreen {
             position: fixed;
             inset: 0;
-            background: rgba(10, 10, 20, 0.95);
+            background: rgba(5, 5, 12, 0.96);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 2000;
             transition: opacity 1s ease, visibility 1s;
         }
 
-        .countdown-timer {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-top: 20px;
-            color: #ff69b4;
-            text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+        .countdown-box {
+            padding: 30px 40px;
+            text-align: center;
         }
 
-        /* Birthday Banner Drop */
-        #banner {
+        .countdown-timer {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-top: 15px;
+            color: #ff5e97;
+            text-shadow: 0 0 20px rgba(255, 94, 151, 0.6);
+        }
+
+        /* Top Dropping Banner (Shows for 10s) */
+        #topBanner {
             position: fixed;
-            top: -200px;
+            top: -250px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 600px;
-            padding: 20px;
+            max-width: 650px;
+            padding: 25px;
             text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.2rem;
+            font-weight: 800;
             color: #fff;
-            background: linear-gradient(45deg, #ff007f, #7928ca);
-            z-index: 999;
-            transition: top 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, #ff007f, #7928ca);
+            z-index: 3000;
+            transition: top 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(255, 0, 127, 0.5);
         }
 
-        #banner.show {
-            top: 20px;
+        #topBanner.show {
+            top: 40px;
         }
 
-        /* Main Container */
+        /* Main Content */
         .main-content {
             display: none;
             opacity: 0;
             transition: opacity 1.5s ease;
             position: relative;
             min-height: 100vh;
-            padding-bottom: 50px;
         }
 
-        /* Burj Khalifa Background Feature */
+        /* Burj Khalifa Background with Building LED Text */
         .burj-bg {
             position: fixed;
             inset: 0;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1400') center/cover no-repeat;
             z-index: -1;
         }
 
-        .burj-led-display {
+        /* Tower LED Lights Animation */
+        .burj-tower-led {
             position: absolute;
-            top: 15%;
+            top: 12%;
             left: 50%;
             transform: translateX(-50%);
-            width: 220px;
-            height: 280px;
-            padding: 10px;
+            width: 140px;
+            height: 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            border: 2px solid rgba(255, 215, 0, 0.6);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
-            animation: pulseGlow 3s infinite alternate;
+            border-left: 2px solid rgba(0, 212, 255, 0.5);
+            border-right: 2px solid rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            background: rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 15px rgba(255, 0, 128, 0.5); }
-            100% { box-shadow: 0 0 35px rgba(0, 212, 255, 0.8); }
-        }
-
-        .burj-led-display img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .burj-led-display h3 {
-            font-size: 1rem;
-            margin-top: 10px;
+        .burj-led-text {
+            font-size: 1.6rem;
+            font-weight: 900;
             color: #fff;
-            text-shadow: 0 0 10px #ff007f;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            animation: towerGlow 2s infinite alternate;
         }
 
-        /* Table & Main Interactive Theme */
-        .stage-container {
-            margin-top: 480px;
+        @keyframes towerGlow {
+            0% {
+                color: #ff007f;
+                text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 40px #ff007f;
+            }
+            50% {
+                color: #00d4ff;
+                text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff;
+            }
+            100% {
+                color: #ffdf00;
+                text-shadow: 0 0 10px #ffdf00, 0 0 20px #ffdf00, 0 0 40px #ffdf00;
+            }
+        }
+
+        /* Ocean Side Beach Table Theme */
+        .sea-stage {
+            margin-top: 520px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 20px;
+            padding: 40px 20px 80px;
+            background: linear-gradient(to top, rgba(0,15,35,0.9), transparent);
         }
 
         .table-setup {
             width: 100%;
-            max-width: 500px;
-            padding: 30px;
+            max-width: 550px;
+            padding: 35px 20px;
             text-align: center;
             position: relative;
         }
 
-        .cake-icon {
-            font-size: 5rem;
-            filter: drop-shadow(0 0 15px rgba(255, 182, 193, 0.8));
-            animation: bounce 2s infinite;
+        .cake-container {
+            font-size: 5.5rem;
+            filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.9));
+            animation: floatCake 3s ease-in-out infinite;
         }
 
-        @keyframes bounce {
+        @keyframes floatCake {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .cake-title {
+            margin-top: 10px;
+            font-size: 1.6rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
         }
 
         .letter-btn {
-            margin-top: 20px;
-            padding: 12px 25px;
+            margin-top: 25px;
+            padding: 14px 30px;
             font-size: 1.1rem;
+            font-weight: 600;
             color: #fff;
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 30px;
+            border-radius: 40px;
             cursor: pointer;
-            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
@@ -182,53 +205,63 @@
             transform: scale(1.05);
         }
 
-        /* Photo Gallery Grid */
+        /* 10 Pictures Grid Gallery */
+        .gallery-section {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
         .gallery-title {
-            margin: 40px 0 20px;
-            font-size: 1.8rem;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #fff;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
-            width: 100%;
-            max-width: 800px;
         }
 
         .gallery-card {
-            padding: 15px;
+            padding: 12px;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .gallery-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
         }
 
         .gallery-card img {
             width: 100%;
-            height: 180px;
+            height: 160px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 16px;
         }
 
         .gallery-card p {
             margin-top: 10px;
-            font-size: 0.9rem;
-            color: #ddd;
+            font-size: 0.85rem;
+            color: #e0e0e0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* Glass Modal Popup */
+        /* iOS Glass Modal Window */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 4000;
             padding: 20px;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -244,7 +277,7 @@
             max-width: 500px;
             padding: 30px;
             position: relative;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             text-align: center;
         }
@@ -253,16 +286,16 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             color: #fff;
         }
 
         .modal-img {
             width: 100%;
-            max-height: 300px;
+            max-height: 320px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 16px;
             margin-bottom: 15px;
         }
     </style>
@@ -271,69 +304,64 @@
 
     <canvas id="starCanvas"></canvas>
 
-    <audio id="bgAudio" loop>
+    <audio id="bgAudio" loop preload="auto">
         <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-155461.mp3" type="audio/mpeg">
     </audio>
 
     <div id="lockScreen">
-        <h2 style="font-weight: 400; color: #ccc;">Counting down for Sajia...</h2>
-        <div class="countdown-timer" id="timerDisplay">00d 00h 00m 00s</div>
+        <div class="countdown-box ios-glass">
+            <h2 style="font-weight: 400; color: #ddd;">Waiting for Sajia's Special Moment...</h2>
+            <div class="countdown-timer" id="timerDisplay">00d 00h 00m 00s</div>
+        </div>
     </div>
 
-    <div id="banner" class="glass-card">
-        ✨ HAPPY BIRTHDAY SAJIA ✨
+    <div id="topBanner" class="ios-glass">
+        🎉 HAPPY BIRTHDAY SAJIA 🎉
     </div>
 
     <div class="main-content" id="mainContent">
         <div class="burj-bg"></div>
 
-        <div class="burj-led-display glass-card">
-            <img id="adImage" src="https://via.placeholder.com/200x180/ff758c/ffffff?text=Sajia+Picture+1" alt="Sajia">
-            <h3>Happy Birthday Sajia</h3>
+        <div class="burj-tower-led">
+            <div class="burj-led-text">HAPPY BIRTHDAY SAJIA</div>
         </div>
 
-        <div class="stage-container">
-            <div class="table-setup glass-card">
-                <div class="cake-icon">🎂</div>
-                <h2 style="margin-top: 10px;">Happy Birthday My Love</h2>
+        <div class="sea-stage">
+            <div class="table-setup ios-glass">
+                <div class="cake-container">🎂</div>
+                <h2 class="cake-title">Happy Birthday Sajia</h2>
                 <button class="letter-btn" onclick="openLetter()">📜 Open My Letter</button>
             </div>
 
-            <h3 class="gallery-title">Memories with Sajia</h3>
-            <div class="gallery-grid">
-                <div class="gallery-card glass-card" onclick="openImageModal('https://via.placeholder.com/500x400/ff758c/ffffff?text=Memory+1', 'তোর সেই মিষ্টি হাসি যা আমি কখনো ভুলব না।')">
-                    <img src="https://via.placeholder.com/300x200/ff758c/ffffff?text=Memory+1" alt="Memory">
-                    <p>তোর সেই মিষ্টি হাসি...</p>
-                </div>
-                <div class="gallery-card glass-card" onclick="openImageModal('https://via.placeholder.com/500x400/ff758c/ffffff?text=Memory+2', 'একসাথে কাটানো সুন্দর মুহূর্তগুলো আজও মনে পড়ে।')">
-                    <img src="https://via.placeholder.com/300x200/ff758c/ffffff?text=Memory+2" alt="Memory">
-                    <p>একসাথে কাটানো মুহূর্ত...</p>
-                </div>
+            <div class="gallery-section">
+                <h3 class="gallery-title">Sweet Memories with Sajia</h3>
+                <div class="gallery-grid" id="galleryGrid">
+                    </div>
             </div>
         </div>
     </div>
 
     <div class="modal" id="letterModal">
-        <div class="modal-content glass-card">
+        <div class="modal-content ios-glass">
             <span class="close-btn" onclick="closeModal('letterModal')">&times;</span>
-            <h2 style="color: #ff69b4; margin-bottom: 15px;">Happy Birthday Sajia!</h2>
-            <p style="line-height: 1.6; text-align: left; color: #eee;" id="customLetterText">
-                শুভ জন্মদিন সাজিয়া। আজও তোকে অনেক ভালোবাসি। হয়তো আজ আমরা একসাথে নেই, কিন্তু তোর জন্মদিনে তোর সব স্বপ্ন পূরণ হোক—এই দোয়াই করি। আই লাভ ইউ সাজিয়া! ❤️
+            <h2 style="color: #ff5e97; margin-bottom: 15px;">Happy Birthday Sajia!</h2>
+            <p style="line-height: 1.7; text-align: left; color: #f0f0f0;">
+                শুভ জন্মদিন সাজিয়া! আজ তোমার এই বিশেষ দিনে তোমাকে অনেক অনেক শুভেচ্ছা। হয়তো সময় অনেক কিছু বদলে দিয়েছে, কিন্তু তোমার প্রতি আমার ভালোবাসা ও সম্মান আজও আগের মতোই আছে। জীবন তোমাকে সবখানের সেরা সুখটুকু এনে দিক। আই লাভ ইউ সাজিয়া! ❤️
             </p>
         </div>
     </div>
 
     <div class="modal" id="imageModal">
-        <div class="modal-content glass-card">
+        <div class="modal-content ios-glass">
             <span class="close-btn" onclick="closeModal('imageModal')">&times;</span>
             <img id="modalImgDisplay" class="modal-img" src="" alt="Sajia">
-            <p id="modalNoteText" style="line-height: 1.5; color: #fff;"></p>
+            <p id="modalNoteText" style="line-height: 1.6; color: #fff; font-size: 1.05rem;"></p>
         </div>
     </div>
 
     <script>
-        // Set target date: 5-09-2026 3:10 PM
-        const targetDate = new Date("September 5, 2026 15:10:00").getTime();
+        // Set target date: September 5, 2026, 3:04 PM
+        const targetDate = new Date("September 5, 2026 15:04:00").getTime();
 
         // Canvas Falling Stars Animation
         const canvas = document.getElementById("starCanvas");
@@ -347,7 +375,7 @@
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 90; i++) {
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
@@ -377,7 +405,7 @@
         const timerDisplay = document.getElementById("timerDisplay");
         const lockScreen = document.getElementById("lockScreen");
         const mainContent = document.getElementById("mainContent");
-        const banner = document.getElementById("banner");
+        const topBanner = document.getElementById("topBanner");
         const bgAudio = document.getElementById("bgAudio");
 
         const countdownInterval = setInterval(() => {
@@ -402,26 +430,44 @@
                 lockScreen.style.visibility = "hidden";
                 mainContent.style.display = "block";
                 setTimeout(() => { mainContent.style.opacity = "1"; }, 50);
-                
-                // Show banner animation
-                banner.classList.add("show");
 
-                // Play Audio
+                // Play Background Birthday Music
                 bgAudio.play().catch(e => console.log("Autoplay blocked:", e));
+
+                // Drop Banner Animation for 10 Seconds
+                topBanner.classList.add("show");
+                setTimeout(() => {
+                    topBanner.classList.remove("show");
+                }, 10000);
+
             }, 1000);
         }
 
-        // Burj Khalifa Billboard Image Rotation
-        const adImages = [
-            "https://via.placeholder.com/200x180/ff758c/ffffff?text=Sajia+Picture+1",
-            "https://via.placeholder.com/200x180/7928ca/ffffff?text=Sajia+Picture+2",
-            "https://via.placeholder.com/200x180/00d4ff/ffffff?text=Sajia+Picture+3"
+        // Render 10 Photo Memory Cards
+        const photoData = [
+            { img: "https://via.placeholder.com/400x300/ff758c/ffffff?text=Sajia+Photo+1", note: "তোর সেই প্রথম মিষ্টি হাসির মুহূর্তটি আজও মনে আছে।" },
+            { img: "https://via.placeholder.com/400x300/7928ca/ffffff?text=Sajia+Photo+2", note: "একসাথে কাটানো সুন্দর বিকেলগুলো স্মৃতি হয়ে রয়ে গেল।" },
+            { img: "https://via.placeholder.com/400x300/00d4ff/ffffff?text=Sajia+Photo+3", note: "তোর প্রতিটি কথা আজও আমার হৃদয় ছুঁয়ে যায়।" },
+            { img: "https://via.placeholder.com/400x300/ff007f/ffffff?text=Sajia+Photo+4", note: "তোর এই অভিমানী মুখটা বড্ড প্রিয় ছিল।" },
+            { img: "https://via.placeholder.com/400x300/ffdf00/ffffff?text=Sajia+Photo+5", note: "শুভ হোক তোর জীবনের প্রতিটি নতুন পথচলা।" },
+            { img: "https://via.placeholder.com/400x300/00ff88/ffffff?text=Sajia+Photo+6", note: "সবসময় এভাবেই হেসে-খেলে ভালো থাকিস সাজিয়া।" },
+            { img: "https://via.placeholder.com/400x300/ff5e97/ffffff?text=Sajia+Photo+7", note: "তোর চোখের সেই চাহনি আমি কখনো ভুলব না।" },
+            { img: "https://via.placeholder.com/400x300/8a2be2/ffffff?text=Sajia+Photo+8", note: "দূরত্ব তৈরি হলেও তোর স্থান চিরকাল ভালোবাসার।" },
+            { img: "https://via.placeholder.com/400x300/00bfff/ffffff?text=Sajia+Photo+9", note: "তোর স্বপ্নগুলো সত্যি হোক, এই প্রার্থনাই করি।" },
+            { img: "https://via.placeholder.com/400x300/ff1493/ffffff?text=Sajia+Photo+10", note: "আই লাভ ইউ সাজিয়া—আজ এবং সারাজীবন।" }
         ];
-        let currentAdIndex = 0;
-        setInterval(() => {
-            currentAdIndex = (currentAdIndex + 1) % adImages.length;
-            document.getElementById("adImage").src = adImages[currentAdIndex];
-        }, 3000);
+
+        const galleryGrid = document.getElementById("galleryGrid");
+        photoData.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.className = "gallery-card ios-glass";
+            card.onclick = () => openImageModal(item.img, item.note);
+            card.innerHTML = `
+                <img src="${item.img}" alt="Sajia Memory ${index + 1}">
+                <p>${item.note}</p>
+            `;
+            galleryGrid.appendChild(card);
+        });
 
         // Modal Functions
         function openLetter() {
@@ -439,4 +485,4 @@
         }
     </script>
 </body>
-      </html>
+</html>

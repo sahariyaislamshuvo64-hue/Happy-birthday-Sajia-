@@ -13,23 +13,21 @@
         }
 
         body {
-            background: #020205;
+            background: #05050d;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* iOS Ultra Glassmorphism */
         .ios-glass {
-            background: rgba(255, 255, 255, 0.09);
-            backdrop-filter: blur(35px) saturate(220%);
-            -webkit-backdrop-filter: blur(35px) saturate(220%);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 28px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
         }
 
-        /* Canvas Layers */
         #starCanvas, #fireworksCanvas {
             position: fixed;
             top: 0;
@@ -39,237 +37,203 @@
             pointer-events: none;
         }
 
-        #starCanvas { z-index: 2; }
-        #fireworksCanvas { z-index: 9000; }
+        #starCanvas { z-index: 1; }
+        #fireworksCanvas { z-index: 9999; }
 
         /* Lock Screen Countdown */
         #lockScreen {
             position: fixed;
             inset: 0;
-            background: rgba(3, 3, 8, 0.98);
+            background: #05050d;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.8s ease, visibility 0.8s;
         }
 
         .countdown-timer {
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             font-weight: 800;
             margin-top: 15px;
-            background: linear-gradient(45deg, #ff2a6d, #05d9e8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 42, 109, 0.6);
+            color: #ff2a6d;
+            text-shadow: 0 0 25px rgba(255, 42, 109, 0.8);
         }
 
-        /* Building Cat & Realistic Cloth Banner Dropper */
-        #buildingCatWrapper {
+        /* Animated Cat Banner Wrapper */
+        #catBannerWrapper {
             position: fixed;
-            top: -650px;
+            top: -600px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 550px;
+            max-width: 500px;
             z-index: 8000;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: top 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: top 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #buildingCatWrapper.drop-cloth {
-            top: 20px;
+        #catBannerWrapper.drop {
+            top: 40px;
         }
 
-        #buildingCatWrapper.pull-up {
-            top: -700px;
+        #catBannerWrapper.lift {
+            top: -650px;
         }
 
-        .cat-on-building {
-            font-size: 4.5rem;
-            margin-bottom: -20px;
+        .cat-icon {
+            font-size: 4rem;
+            margin-bottom: -15px;
             z-index: 2;
-            filter: drop-shadow(0 15px 10px rgba(0,0,0,0.8));
-            animation: catHang 1.5s infinite alternate ease-in-out;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.8));
+            animation: catWiggle 1s infinite alternate ease-in-out;
         }
 
-        @keyframes catHang {
-            0% { transform: translateY(0) rotate(-3deg); }
-            100% { transform: translateY(-5px) rotate(3deg); }
+        @keyframes catWiggle {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
         }
 
-        /* Real Fabric / Cloth Banner Style */
         .cloth-banner {
             width: 100%;
-            padding: 35px 20px;
+            padding: 30px 20px;
             text-align: center;
-            background: linear-gradient(135deg, #11001c, #220033, #11001c);
-            border: 3px solid rgba(255, 42, 109, 0.8);
-            border-radius: 10px 10px 30px 30px;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(255, 42, 109, 0.3);
-            position: relative;
-            transform-origin: top center;
-            animation: clothWave 3.5s infinite ease-in-out;
-        }
-
-        /* Cloth Wrinkle / Folding Lines Effect */
-        .cloth-banner::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(
-                90deg,
-                rgba(255, 255, 255, 0.03),
-                rgba(255, 255, 255, 0.03) 15px,
-                rgba(0, 0, 0, 0.15) 15px,
-                rgba(0, 0, 0, 0.15) 30px
-            );
-            pointer-events: none;
-        }
-
-        @keyframes clothWave {
-            0% { transform: rotate(0deg) skewX(0deg); }
-            25% { transform: rotate(1.5deg) skewX(1deg); }
-            75% { transform: rotate(-1.5deg) skewX(-1deg); }
-            100% { transform: rotate(0deg) skewX(0deg); }
+            background: linear-gradient(135deg, #180029, #2d0047);
+            border: 2px solid #ff2a6d;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(255, 42, 109, 0.5);
         }
 
         .cloth-banner h1 {
-            font-size: 2.3rem;
+            font-size: 2rem;
             color: #fff;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px #ff2a6d, 0 0 40px #ff2a6d;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px #ff2a6d;
         }
 
-        /* Main Website Wrapper */
+        /* Main Website Page */
         .main-content {
-            display: none;
             opacity: 0;
-            transition: opacity 1.2s ease;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s;
             position: relative;
             min-height: 100vh;
             padding-bottom: 80px;
+            z-index: 2;
         }
 
-        .burj-bg {
+        .main-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .bg-wallpaper {
             position: fixed;
             inset: 0;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), 
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), 
                         url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1400') center/cover no-repeat;
             z-index: -1;
         }
 
-        .building-billboard {
+        .hero-billboard {
             position: absolute;
-            top: 7%;
+            top: 40px;
             left: 50%;
             transform: translateX(-50%);
-            width: 320px;
-            padding: 20px;
+            width: 300px;
+            padding: 18px;
             text-align: center;
-            border: 2px solid rgba(5, 217, 232, 0.8);
-            box-shadow: 0 0 35px rgba(5, 217, 232, 0.5);
+            border: 2px solid #05d9e8;
+            box-shadow: 0 0 25px rgba(5, 217, 232, 0.5);
             border-radius: 16px;
             background: rgba(0, 0, 0, 0.85);
         }
 
-        .building-billboard h2 {
+        .hero-billboard h2 {
             color: #05d9e8;
-            font-size: 1.5rem;
-            text-shadow: 0 0 15px #05d9e8;
-            animation: textGlow 3s infinite alternate;
+            font-size: 1.3rem;
+            text-shadow: 0 0 12px #05d9e8;
         }
 
-        @keyframes textGlow {
-            0% { opacity: 0.8; text-shadow: 0 0 10px #05d9e8; }
-            100% { opacity: 1; text-shadow: 0 0 25px #ff2a6d; color: #ff2a6d; }
-        }
-
-        /* Layout Container */
         .container {
-            margin-top: 310px;
-            max-width: 1000px;
+            margin-top: 220px;
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
             padding: 0 20px;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 40px;
         }
 
         .section-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             color: #fff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
-        /* Sticky Notes Board */
         .sticky-board {
-            padding: 30px;
+            padding: 25px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
         }
 
         .sticky-note {
             background: rgba(255, 255, 255, 0.12);
-            padding: 22px;
-            border-radius: 20px;
+            padding: 20px;
+            border-radius: 18px;
             position: relative;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
             border-top: 4px solid #05d9e8;
         }
 
         .sticky-note:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
         }
 
-        .pin {
+        .pin-icon {
             position: absolute;
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
-        /* 10 Photo Cards */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
         }
 
         .photo-card {
-            padding: 12px;
+            padding: 10px;
             cursor: pointer;
             transition: transform 0.3s ease;
         }
 
         .photo-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
         }
 
         .photo-card img {
             width: 100%;
-            height: 170px;
+            height: 150px;
             object-fit: cover;
-            border-radius: 18px;
+            border-radius: 14px;
         }
 
         .photo-card p {
-            margin-top: 10px;
-            font-size: 0.85rem;
+            margin-top: 8px;
+            font-size: 0.8rem;
             color: #ddd;
             text-align: center;
         }
 
-        /* Glass Popup Modal */
         .modal {
             position: fixed;
             inset: 0;
@@ -279,28 +243,25 @@
             align-items: center;
             z-index: 11000;
             padding: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .modal.active {
             display: flex;
-            opacity: 1;
         }
 
         .modal-content {
             width: 100%;
-            max-width: 500px;
-            padding: 30px;
+            max-width: 450px;
+            padding: 25px;
             position: relative;
             text-align: center;
         }
 
         .close-btn {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.8rem;
+            top: 12px;
+            right: 18px;
+            font-size: 1.6rem;
             cursor: pointer;
             color: #fff;
         }
@@ -311,30 +272,25 @@
     <canvas id="starCanvas"></canvas>
     <canvas id="fireworksCanvas"></canvas>
 
-    <audio id="bgAudio" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-155461.mp3" type="audio/mpeg">
-    </audio>
-
     <div id="lockScreen">
-        <div class="ios-glass" style="padding: 40px; text-align: center;">
-            <h2 style="font-weight: 400; color: #aaa;">Waiting for Sajia's Birthday...</h2>
+        <div class="ios-glass" style="padding: 35px; text-align: center;">
+            <h2 style="font-weight: 400; color: #ccc; font-size: 1.2rem;">Sajia's Birthday Countdown</h2>
             <div class="countdown-timer" id="timerDisplay">00d 00h 00m 00s</div>
         </div>
     </div>
 
-    <div id="buildingCatWrapper">
-        <div class="cat-on-building">🐱🐾</div>
+    <div id="catBannerWrapper">
+        <div class="cat-icon">🐱🐾</div>
         <div class="cloth-banner">
             <h1>HAPPY BIRTHDAY SAJIA</h1>
         </div>
     </div>
 
     <div class="main-content" id="mainContent">
-        <div class="burj-bg"></div>
+        <div class="bg-wallpaper"></div>
 
-        <div class="building-billboard">
-            <h2>HAPPY BIRTHDAY SAJIA</h2>
-            <p style="font-size: 0.8rem; color: #ccc; margin-top: 5px;">আজও ভালবাসি তোমায়</p>
+        <div class="hero-billboard">
+            <h2 id="billboardText">HAPPY BIRTHDAY SAJIA</h2>
         </div>
 
         <div class="container">
@@ -342,19 +298,19 @@
                 <h3 class="section-title">📌 Pinned Sticky Notes</h3>
                 <div class="sticky-board ios-glass">
                     <div class="sticky-note" onclick="openModal('স্মৃতিগুলো সুন্দর', 'তোর সাথে কাটানো প্রতিটা মুহূর্ত আমার জীবনের সেরা উপহার।')">
-                        <span class="pin">📌</span>
+                        <span class="pin-icon">📌</span>
                         <h4>স্মৃতিগুলো সুন্দর</h4>
-                        <p style="margin-top: 8px; font-size: 0.85rem; color: #bbb;">তোর সাথে কাটানো প্রতিটা...</p>
+                        <p style="margin-top: 6px; font-size: 0.8rem; color: #bbb;">তোর সাথে কাটানো...</p>
                     </div>
                     <div class="sticky-note" onclick="openModal('তোর মিষ্টি হাসি', 'তোর এক চিলতে হাসি পুরো দিনটাকে আলো করে দেওয়ার জন্য যথেষ্ট ছিল।')">
-                        <span class="pin">📌</span>
+                        <span class="pin-icon">📌</span>
                         <h4>তোর মিষ্টি হাসি</h4>
-                        <p style="margin-top: 8px; font-size: 0.85rem; color: #bbb;">তোর এক চিলতে হাসি পুরো...</p>
+                        <p style="margin-top: 6px; font-size: 0.8rem; color: #bbb;">তোর এক চিলতে হাসি...</p>
                     </div>
                     <div class="sticky-note" onclick="openModal('চিরন্তন ভালোবাসা', 'পরিস্থিতি যাই হোক না কেন, তোর প্রতি আমার ভালোবাসা অমলিন থাকবে।')">
-                        <span class="pin">📌</span>
+                        <span class="pin-icon">📌</span>
                         <h4>চিরন্তন ভালোবাসা</h4>
-                        <p style="margin-top: 8px; font-size: 0.85rem; color: #bbb;">পরিস্থিতি যাই হোক না কেন...</p>
+                        <p style="margin-top: 6px; font-size: 0.8rem; color: #bbb;">পরিস্থিতি যাই হোক...</p>
                     </div>
                 </div>
             </div>
@@ -369,16 +325,16 @@
     <div class="modal" id="modalWindow">
         <div class="modal-content ios-glass">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <img id="modalImg" src="" style="width: 100%; height: 250px; object-fit: cover; border-radius: 16px; display: none; margin-bottom: 15px;" alt="Memory">
-            <h3 id="modalTitle" style="color: #ff2a6d; margin-bottom: 10px;"></h3>
-            <p id="modalBody" style="line-height: 1.6; color: #eee;"></p>
+            <img id="modalImg" src="" style="width: 100%; height: 220px; object-fit: cover; border-radius: 14px; display: none; margin-bottom: 12px;" alt="Memory">
+            <h3 id="modalTitle" style="color: #ff2a6d; margin-bottom: 8px;"></h3>
+            <p id="modalBody" style="line-height: 1.5; color: #eee; font-size: 0.95rem;"></p>
         </div>
     </div>
 
     <script>
         const targetDate = new Date("September 5, 2026 15:04:00").getTime();
 
-        // Canvas Background Stars
+        // Background Stars
         const starCanvas = document.getElementById("starCanvas");
         const starCtx = starCanvas.getContext("2d");
         let stars = [];
@@ -390,8 +346,8 @@
         window.addEventListener("resize", resizeStars);
         resizeStars();
 
-        for (let i = 0; i < 80; i++) {
-            stars.push({ x: Math.random() * starCanvas.width, y: Math.random() * starCanvas.height, size: Math.random() * 2 + 1, speed: Math.random() * 1.2 + 0.4 });
+        for (let i = 0; i < 70; i++) {
+            stars.push({ x: Math.random() * starCanvas.width, y: Math.random() * starCanvas.height, size: Math.random() * 2 + 1, speed: Math.random() * 1 + 0.3 });
         }
 
         function animateStars() {
@@ -408,7 +364,7 @@
         }
         animateStars();
 
-        // Ultra Realistic Fireworks with Gravity Spark Falling (Strict 5 Seconds)
+        // 5 Seconds Fireworks Animation
         const fwCanvas = document.getElementById("fireworksCanvas");
         const fwCtx = fwCanvas.getContext("2d");
         let particles = [];
@@ -417,20 +373,20 @@
         window.addEventListener("resize", resizeFw);
         resizeFw();
 
-        function createRealExplosion(x, y) {
-            const colors = ['#ff2a6d', '#05d9e8', '#ffdf00', '#00ff88', '#ffffff', '#ff7b00'];
-            for (let i = 0; i < 75; i++) {
+        function createExplosion(x, y) {
+            const colors = ['#ff2a6d', '#05d9e8', '#ffdf00', '#00ff88', '#ffffff'];
+            for (let i = 0; i < 50; i++) {
                 const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 8 + 2;
+                const speed = Math.random() * 6 + 2;
                 particles.push({
                     x: x, y: y,
                     color: colors[Math.floor(Math.random() * colors.length)],
                     radius: Math.random() * 2.5 + 1,
                     vx: Math.cos(angle) * speed,
                     vy: Math.sin(angle) * speed,
-                    gravity: 0.15, // Physics Gravity pull down
+                    gravity: 0.12,
                     alpha: 1,
-                    decay: Math.random() * 0.015 + 0.01
+                    decay: 0.02
                 });
             }
         }
@@ -449,7 +405,6 @@
                     fwCtx.fill();
                     fwCtx.restore();
 
-                    // Physics math: Velocity + Gravity
                     p.x += p.vx;
                     p.y += p.vy;
                     p.vy += p.gravity;
@@ -462,21 +417,18 @@
         }
         animateFireworks();
 
-        function triggerRealistic5SecFireworks() {
+        function trigger5SecFireworks() {
             let timer = setInterval(() => {
-                createRealExplosion(Math.random() * fwCanvas.width, Math.random() * (fwCanvas.height * 0.5));
+                createExplosion(Math.random() * fwCanvas.width, Math.random() * (fwCanvas.height * 0.5));
             }, 200);
-            
-            // Stop generating new fireworks after 5 seconds
             setTimeout(() => clearInterval(timer), 5000);
         }
 
-        // Countdown Logic
+        // Timer & Unlock Logic
         const timerDisplay = document.getElementById("timerDisplay");
         const lockScreen = document.getElementById("lockScreen");
-        const buildingCatWrapper = document.getElementById("buildingCatWrapper");
+        const catBannerWrapper = document.getElementById("catBannerWrapper");
         const mainContent = document.getElementById("mainContent");
-        const bgAudio = document.getElementById("bgAudio");
 
         const countdown = setInterval(() => {
             const now = new Date().getTime();
@@ -499,27 +451,33 @@
             setTimeout(() => {
                 lockScreen.style.visibility = "hidden";
                 
-                // Cat drops the cloth banner from top
-                buildingCatWrapper.classList.add("drop-cloth");
+                catBannerWrapper.classList.add("drop");
 
-                // Holds banner for 10 seconds then pulls it back up
                 setTimeout(() => {
-                    buildingCatWrapper.classList.remove("drop-cloth");
-                    buildingCatWrapper.classList.add("pull-up");
+                    catBannerWrapper.classList.remove("drop");
+                    catBannerWrapper.classList.add("lift");
 
-                    // Show Main Page & Trigger 5s Realistic Fireworks
-                    mainContent.style.display = "block";
-                    setTimeout(() => { mainContent.style.opacity = "1"; }, 50);
-
-                    bgAudio.play().catch(e => console.log(e));
-                    triggerRealistic5SecFireworks();
+                    mainContent.classList.add("active");
+                    trigger5SecFireworks();
 
                 }, 10000);
 
             }, 800);
         }
 
-        // 10 Pictures with 10 Individual Notes
+        // Rotating Billboard Text (30 Seconds)
+        const billboardText = document.getElementById("billboardText");
+        let isAltText = false;
+        setInterval(() => {
+            billboardText.style.opacity = "0";
+            setTimeout(() => {
+                isAltText = !isAltText;
+                billboardText.innerText = isAltText ? "আজও ভালবাসি তোমায়" : "HAPPY BIRTHDAY SAJIA";
+                billboardText.style.opacity = "1";
+            }, 500);
+        }, 30000);
+
+        // 10 Photos Grid
         const photoGallery = [
             { img: "https://via.placeholder.com/400x300/ff2a6d/ffffff?text=Photo+1", note: "১. তোর সেই মিষ্টি হাসিটা আজও সেরা।" },
             { img: "https://via.placeholder.com/400x300/05d9e8/ffffff?text=Photo+2", note: "২. একসাথে কাটানো সুন্দর বিকেলগুলোর স্মৃতি।" },
@@ -538,11 +496,10 @@
             const card = document.createElement("div");
             card.className = "photo-card ios-glass";
             card.onclick = () => openImageModal(item.img, `Memory #${idx + 1}`, item.note);
-            card.innerHTML = `<img src="${item.img}" alt="Sajia Memory"><p>${item.note}</p>`;
+            card.innerHTML = `<img src="${item.img}" alt="Memory"><p>${item.note}</p>`;
             galleryGrid.appendChild(card);
         });
 
-        // Modals
         function openModal(title, text) {
             document.getElementById("modalImg").style.display = "none";
             document.getElementById("modalTitle").innerText = title;

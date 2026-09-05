@@ -13,253 +13,247 @@
         }
 
         body {
-            background: #05050d;
+            background: #030308;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* Ultimate Ultra-Fast iOS Glass Effect */
-        .ios-glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 28px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        /* iOS 26 Glassmorphism Ultra Smooth */
+        .ios26-glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(35px) saturate(210%);
+            -webkit-backdrop-filter: blur(35px) saturate(210%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
         }
 
-        /* Falling Stars Canvas */
-        #starCanvas {
+        /* Canvas Layers */
+        #starCanvas, #fireworksCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 5;
         }
 
-        /* Fireworks Canvas */
-        #fireworksCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 15;
-        }
+        #starCanvas { z-index: 2; }
+        #fireworksCanvas { z-index: 100; }
 
-        /* Lock Screen / Countdown */
+        /* Lock Screen Countdown */
         #lockScreen {
             position: fixed;
             inset: 0;
-            background: rgba(5, 5, 12, 0.98);
+            background: rgba(4, 4, 10, 0.98);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 5000;
-            transition: opacity 1s ease, visibility 1s;
-        }
-
-        .countdown-box {
-            padding: 40px;
-            text-align: center;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .countdown-timer {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
             margin-top: 15px;
-            color: #ff3366;
-            text-shadow: 0 0 25px rgba(255, 51, 102, 0.7);
+            background: linear-gradient(45deg, #ff2a6d, #05d9e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 42, 109, 0.5);
         }
 
-        /* Black Real Drop Banner (Disappears after 4 sec) */
-        #dropBanner {
+        /* Cat Drop Banner Container */
+        #catBannerWrapper {
             position: fixed;
-            top: -300px;
+            top: -450px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 650px;
-            padding: 30px;
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 800;
-            color: #fff;
-            background: rgba(15, 15, 20, 0.95);
-            border: 2px solid rgba(255, 51, 102, 0.5);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            max-width: 600px;
             z-index: 6000;
-            transition: top 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: top 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #dropBanner.drop {
-            top: 60px;
+        #catBannerWrapper.drop {
+            top: 30px;
         }
 
-        #dropBanner.fly-up {
-            top: -300px;
+        #catBannerWrapper.lift-up {
+            top: -500px;
         }
 
-        /* Main Content */
+        .cat-character {
+            font-size: 4rem;
+            margin-bottom: -15px;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
+            animation: catWiggle 1s infinite alternate ease-in-out;
+        }
+
+        @keyframes catWiggle {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
+        .real-banner {
+            width: 100%;
+            padding: 25px;
+            text-align: center;
+            background: rgba(12, 12, 18, 0.95);
+            border: 2px solid #ff2a6d;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(255, 42, 109, 0.4);
+        }
+
+        .real-banner h1 {
+            font-size: 2.2rem;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px #ff2a6d;
+        }
+
+        /* Main Website Wrapper */
         .main-content {
             display: none;
             opacity: 0;
-            transition: opacity 1.5s ease;
+            transition: opacity 1.2s ease;
             position: relative;
             min-height: 100vh;
+            padding-bottom: 80px;
         }
 
-        /* Background & Animated Billboard */
         .billboard-bg {
             position: fixed;
             inset: 0;
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), 
                         url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1400') center/cover no-repeat;
             z-index: -1;
         }
 
-        .billboard-frame {
+        .billboard-billboard {
             position: absolute;
-            top: 10%;
+            top: 8%;
             left: 50%;
             transform: translateX(-50%);
             width: 320px;
-            height: 140px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
             text-align: center;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.75);
-            border: 3px solid #ff3366;
-            box-shadow: 0 0 35px rgba(255, 51, 102, 0.6);
-            border-radius: 12px;
+            border: 2px solid rgba(5, 217, 232, 0.8);
+            box-shadow: 0 0 30px rgba(5, 217, 232, 0.4);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.8);
         }
 
-        .billboard-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #ff3366;
-            text-shadow: 0 0 15px #ff3366, 0 0 30px #ff3366;
-            transition: opacity 0.8s ease;
+        .billboard-billboard h2 {
+            color: #05d9e8;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px #05d9e8;
+            animation: textPulse 3s infinite alternate;
         }
 
-        /* Sections Wrapper */
+        @keyframes textPulse {
+            0% { opacity: 0.8; text-shadow: 0 0 10px #05d9e8; }
+            100% { opacity: 1; text-shadow: 0 0 25px #ff2a6d; color: #ff2a6d; }
+        }
+
+        /* Content Container */
         .container {
-            margin-top: 320px;
-            padding: 30px 20px 80px;
+            margin-top: 300px;
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
+            padding: 0 20px;
             display: flex;
             flex-direction: column;
             gap: 50px;
         }
 
-        /* Section Title */
         .section-title {
             font-size: 1.8rem;
             text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin-bottom: 25px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
-        /* Pinned Note Board */
-        .pin-board {
+        /* Pin Sticky Note Board */
+        .sticky-board {
             padding: 30px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
         }
 
-        .pin-paper {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            border-radius: 16px;
+        .sticky-note {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 22px;
+            border-radius: 20px;
             position: relative;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            border-top: 4px solid #ff3366;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 4px solid #05d9e8;
         }
 
-        .pin-paper:hover {
-            transform: scale(1.05) rotate(1deg);
+        .sticky-note:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        .pin-icon {
+        .pin {
             position: absolute;
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
-        .pin-paper p {
-            font-size: 0.95rem;
-            line-height: 1.4;
-            color: #eee;
-        }
-
-        /* 500-Word Letter Section */
-        .letter-box {
-            padding: 40px;
-            line-height: 1.8;
-            font-size: 1.05rem;
-            color: #f0f0f0;
-            max-height: 450px;
-            overflow-y: auto;
-            border-left: 5px solid #ff3366;
-        }
-
-        /* Photo Gallery Grid */
+        /* 10 Pictures Grid Gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
         }
 
-        .gallery-card {
+        .photo-card {
             padding: 12px;
             cursor: pointer;
             transition: transform 0.3s ease;
         }
 
-        .gallery-card:hover {
+        .photo-card:hover {
             transform: translateY(-8px);
         }
 
-        .gallery-card img {
+        .photo-card img {
             width: 100%;
-            height: 160px;
+            height: 170px;
             object-fit: cover;
-            border-radius: 16px;
+            border-radius: 18px;
         }
 
-        .gallery-card p {
+        .photo-card p {
             margin-top: 10px;
             font-size: 0.85rem;
             color: #ddd;
             text-align: center;
         }
 
-        /* Modal Popup */
+        /* Modal Glass Popup */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.82);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 7000;
+            z-index: 8000;
             padding: 20px;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
         }
 
         .modal.active {
@@ -272,8 +266,6 @@
             max-width: 500px;
             padding: 30px;
             position: relative;
-            max-height: 85vh;
-            overflow-y: auto;
             text-align: center;
         }
 
@@ -285,20 +277,11 @@
             cursor: pointer;
             color: #fff;
         }
-
-        .modal-img {
-            width: 100%;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: 16px;
-            margin-bottom: 15px;
-        }
     </style>
 </head>
 <body>
 
     <canvas id="starCanvas"></canvas>
-
     <canvas id="fireworksCanvas"></canvas>
 
     <audio id="bgAudio" loop preload="auto">
@@ -306,149 +289,126 @@
     </audio>
 
     <div id="lockScreen">
-        <div class="countdown-box ios-glass">
-            <h2 style="font-weight: 400; color: #ddd;">Waiting for Sajia's Birthday...</h2>
+        <div class="ios26-glass" style="padding: 40px; text-align: center;">
+            <h2 style="font-weight: 400; color: #aaa;">Sajia's Birthday Countdown</h2>
             <div class="countdown-timer" id="timerDisplay">00d 00h 00m 00s</div>
         </div>
     </div>
 
-    <div id="dropBanner">
-        🎉 HAPPY BIRTHDAY SAJIA 🎉
+    <div id="catBannerWrapper">
+        <div class="cat-character">🐱🐾</div>
+        <div class="real-banner">
+            <h1>HAPPY BIRTHDAY SAJIA</h1>
+        </div>
     </div>
 
     <div class="main-content" id="mainContent">
         <div class="billboard-bg"></div>
-        <div class="billboard-frame">
-            <div class="billboard-text" id="billboardText">HAPPY BIRTHDAY SAJIA</div>
+
+        <div class="billboard-billboard">
+            <h2>HAPPY BIRTHDAY SAJIA</h2>
+            <p style="font-size: 0.8rem; color: #ccc; margin-top: 5px;">আজও ভালবাসি তোমায়</p>
         </div>
 
         <div class="container">
-
             <div>
-                <h3 class="section-title">📌 Notes for You</h3>
-                <div class="pin-board ios-glass">
-                    <div class="pin-paper" onclick="openTextModal('স্মৃতিগুলো খুব সুন্দর ছিল', 'তোর সাথে কাটানো প্রতিটা মুহূর্ত আমার জীবনের সবচেয়ে সুন্দর অংশ ছিল। সময়ের সাথে সাথে পরিস্থিতি হয়তো বদলেছে, কিন্তু তোর দেওয়া মিষ্টি অনুভূতিগুলো আজও একদম তাজা।')">
-                        <span class="pin-icon">📌</span>
-                        <p><strong>স্মৃতিগুলো খুব সুন্দর...</strong><br>তোর সাথে কাটানো প্রতিটা মুহূর্ত...</p>
+                <h3 class="section-title">📌 Pinned Notes for Sajia</h3>
+                <div class="sticky-board ios26-glass">
+                    <div class="sticky-note" onclick="openModal('স্মৃতিগুলো সুন্দর', 'তোর সাথে কাটানো প্রতিটা মুহূর্ত আমার জীবনের সেরা উপহার।')">
+                        <span class="pin">📌</span>
+                        <h4>স্মৃতিগুলো সুন্দর</h4>
+                        <p style="margin-top: 8px; font-size: 0.85rem; color: #bbb;">তোর সাথে কাটানো প্রতিটা...</p>
                     </div>
-                    <div class="pin-paper" onclick="openTextModal('তোর হাসির শব্দ', 'তোর সেই খিলখিল করে হেসে ওঠার শব্দটা আমি কখনো ভুলতে পারব না। ওই হাসির আলোতেই আমার পুরোটা দিন সুন্দর হয়ে যেত।')">
-                        <span class="pin-icon">📌</span>
-                        <p><strong>তোর হাসির শব্দ...</strong><br>তোর সেই খিলখিল করে হেসে ওঠার...</p>
+                    <div class="sticky-note" onclick="openModal('তোর মিষ্টি হাসি', 'তোর এক চিলতে হাসি পুরো দিনটাকে আলো করে দেওয়ার জন্য যথেষ্ট ছিল।')">
+                        <span class="pin">📌</span>
+                        <h4>তোর মিষ্টি হাসি</h4>
+                        <p style="margin-top: 8px; font-size: 0.85rem; color: #bbb;">তোর এক চিলতে হাসি পুরো...</p>
                     </div>
-                    <div class="pin-paper" onclick="openTextModal('শুভকামনা সবসময়', 'তুই যেখানেই থাকিস, যেমন অবস্থাতেই থাকিস—আমার হৃদয় থেকে তোর জন্য সবসময় অঝোর ধারায় শুভকামনা থাকবে।')">
-                        <span class="pin-icon">📌</span>
-                        <p><strong>শুভকামনা সবসময়...</strong><br>তুই যেখানেই থাকিস না কেন...</p>
+                    <div class="sticky-note" onclick="openModal('চিরন্তন ভালোবাসা', 'পরিস্থিতি যাই হোক না কেন, তোর প্রতি আমার ভালোবাসা অমলিন থাকবে।')">
+                        <span class="pin">📌</span>
+                        <h4>চিরন্তন ভালোবাসা</h4>
+                        <p style="margin-top: 8px; font-size: 0.85rem; color: #bbb;">পরিস্থিতি যাই হোক না কেন...</p>
                     </div>
                 </div>
             </div>
 
             <div>
-                <h3 class="section-title">📜 My Special Letter to Sajia</h3>
-                <div class="letter-box ios-glass">
-                    <h2 style="color: #ff3366; margin-bottom: 15px; text-align: center;">প্রিয় সাজিয়া,</h2>
-                    <p>
-                        শুভ জন্মদিন! আজকের এই বিশেষ দিনটি তোর জীবনের অন্যতম একটি সুন্দর দিন। দূরত্ব কতখানি তৈরি হয়েছে বা সম্পর্কের নাম কী দাঁড়িয়েছে, তা দিয়ে আমার হৃদয়ের সত্য অনুভূতির পরিমাপ করা সম্ভব নয়। তুই যেমন আগে বিশেষ একজন ছিলি, আজও আমার মনের কোণে তুই তেমনই বিশেষ এবং অনন্য।<br><br>
-                        আজকে তোর জন্মদিনে আমি পেছনে ফিরে তাকাই, যখন তুই আমার প্রতিটি দিনের সেরা আলো ছিলি। তোর সাথে কাটানো সুন্দর বিকেলগুলো, কোনো বিশেষ কারণ ছাড়াই গল্প করা এবং হঠাৎ তোর মিষ্টি হাসির ঝলক—এসব কিছু আজও আমার মস্তিষ্কের কোষে কোষে সতেজ রয়ে গেছে। হয়তো মানুষ বদলে যায়, সময় বদলে যায়, পরিস্থিতি জীবনকে নানা বাঁকে নিয়ে দাঁড় করায়; কিন্তু শুভস্মৃতিগুলো কখনো ধূসর হয় না।<br><br>
-                        আমি চাই তুই সফলতার সর্বোচ্চ শিখরে পৌঁছাস। তোর জীবনের প্রতিটি পথচলা সুন্দর ও নিরাপদ হোক। তোর চোখের প্রতিটি পানির ফোটা যেন আনন্দের কান্না হয়ে ঝরে। জীবনের সব কঠিন পরিস্থিতিতেও তুই যেন হাসিমুখে জয়ী হতে পারিস, সেই শুভকামনাই রইল।<br><br>
-                        আমি তোকে কোনো শর্ত বা বাধ্যবাধকতা ছাড়াই ভালোবেসেছি, আজও বাসি। হয়তো তোকে প্রকাশ করার অধিকার আমার আর নেই, কিন্তু দূর থেকে তোকে সুন্দর জীবনের দোয়ায় জড়িয়ে রাখার অধিকারটুকু কেউ কেড়ে নিতে পারবে না। ভালো থাকিস সাজিয়া, অনেক অনেক ভালো থাকিস। তোর জীবনের প্রতিটি বছর নিয়ে আসুক অনাবিল আনন্দ আর ভালোবাসা।<br><br>
-                        <strong>— আজ এবং সারাজীবন তোকে ভালোবেসে যাওয়া একজন।</strong>
-                    </p>
-                </div>
+                <h3 class="section-title">📸 10 Special Memories</h3>
+                <div class="gallery-grid" id="galleryGrid"></div>
             </div>
-
-            <div>
-                <h3 class="section-title">📸 Memories Gallery</h3>
-                <div class="gallery-grid" id="galleryGrid">
-                    </div>
-            </div>
-
         </div>
     </div>
 
     <div class="modal" id="modalWindow">
-        <div class="modal-content ios-glass">
+        <div class="modal-content ios26-glass">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <img id="modalImg" class="modal-img" src="" style="display: none;" alt="Memory">
-            <h3 id="modalTitle" style="color: #ff3366; margin-bottom: 10px;"></h3>
-            <p id="modalBody" style="line-height: 1.6; color: #f0f0f0;"></p>
+            <img id="modalImg" src="" style="width: 100%; height: 250px; object-fit: cover; border-radius: 16px; display: none; margin-bottom: 15px;" alt="Memory">
+            <h3 id="modalTitle" style="color: #ff2a6d; margin-bottom: 10px;"></h3>
+            <p id="modalBody" style="line-height: 1.6; color: #eee;"></p>
         </div>
     </div>
 
     <script>
-        // Target Date: September 5, 2026 3:04 PM
         const targetDate = new Date("September 5, 2026 15:04:00").getTime();
 
-        // Falling Stars Logic
+        // Falling Stars
         const starCanvas = document.getElementById("starCanvas");
         const starCtx = starCanvas.getContext("2d");
         let stars = [];
 
-        function resizeStarCanvas() {
+        function resizeStars() {
             starCanvas.width = window.innerWidth;
             starCanvas.height = window.innerHeight;
         }
-        window.addEventListener("resize", resizeStarCanvas);
-        resizeStarCanvas();
+        window.addEventListener("resize", resizeStars);
+        resizeStars();
 
-        for (let i = 0; i < 90; i++) {
-            stars.push({
-                x: Math.random() * starCanvas.width,
-                y: Math.random() * starCanvas.height,
-                size: Math.random() * 2 + 1,
-                speed: Math.random() * 1.5 + 0.5
-            });
+        for (let i = 0; i < 80; i++) {
+            stars.push({ x: Math.random() * starCanvas.width, y: Math.random() * starCanvas.height, size: Math.random() * 2 + 1, speed: Math.random() * 1.2 + 0.4 });
         }
 
         function animateStars() {
             starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
             starCtx.fillStyle = "#ffffff";
-            stars.forEach(star => {
+            stars.forEach(s => {
                 starCtx.beginPath();
-                starCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                starCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
                 starCtx.fill();
-                star.y += star.speed;
-                if (star.y > starCanvas.height) {
-                    star.y = 0;
-                    star.x = Math.random() * starCanvas.width;
-                }
+                s.y += s.speed;
+                if (s.y > starCanvas.height) { s.y = 0; s.x = Math.random() * starCanvas.width; }
             });
             requestAnimationFrame(animateStars);
         }
         animateStars();
 
-        // Fireworks Fireworks Animation System
+        // Real Fireworks (5 Seconds Duration)
         const fwCanvas = document.getElementById("fireworksCanvas");
         const fwCtx = fwCanvas.getContext("2d");
         let particles = [];
 
-        function resizeFwCanvas() {
-            fwCanvas.width = window.innerWidth;
-            fwCanvas.height = window.innerHeight;
-        }
-        window.addEventListener("resize", resizeFwCanvas);
-        resizeFwCanvas();
+        function resizeFw() { fwCanvas.width = window.innerWidth; fwCanvas.height = window.innerHeight; }
+        window.addEventListener("resize", resizeFw);
+        resizeFw();
 
-        function createFirework(x, y) {
-            const colors = ['#ff3366', '#00d4ff', '#ffdf00', '#00ff88', '#ffffff'];
-            for (let i = 0; i < 40; i++) {
+        function createExplosion(x, y) {
+            const colors = ['#ff2a6d', '#05d9e8', '#ffdf00', '#00ff88', '#ffffff'];
+            for (let i = 0; i < 50; i++) {
                 particles.push({
                     x: x, y: y,
                     color: colors[Math.floor(Math.random() * colors.length)],
                     radius: Math.random() * 3 + 1,
-                    velocity: {
-                        x: (Math.random() - 0.5) * 8,
-                        y: (Math.random() - 0.5) * 8
-                    },
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
                     alpha: 1
                 });
             }
         }
 
         function animateFireworks() {
-            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.15)';
             fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
 
-            particles.forEach((p, index) => {
+            particles.forEach((p, idx) => {
                 if (p.alpha > 0) {
                     fwCtx.save();
                     fwCtx.globalAlpha = p.alpha;
@@ -457,45 +417,44 @@
                     fwCtx.fillStyle = p.color;
                     fwCtx.fill();
                     fwCtx.restore();
-
-                    p.x += p.velocity.x;
-                    p.y += p.velocity.y;
-                    p.alpha -= 0.015;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.alpha -= 0.02;
                 } else {
-                    particles.splice(index, 1);
+                    particles.splice(idx, 1);
                 }
             });
             requestAnimationFrame(animateFireworks);
         }
         animateFireworks();
 
-        function triggerFireworksBurst() {
-            let interval = setInterval(() => {
-                createFirework(Math.random() * fwCanvas.width, Math.random() * (fwCanvas.height * 0.6));
-            }, 300);
-            setTimeout(() => clearInterval(interval), 10000); // Fireworks burst for 10 sec
+        function trigger5SecFireworks() {
+            let timer = setInterval(() => {
+                createExplosion(Math.random() * fwCanvas.width, Math.random() * (fwCanvas.height * 0.5));
+            }, 250);
+            setTimeout(() => clearInterval(timer), 5000); // Strictly 5 seconds
         }
 
-        // Countdown System
+        // Countdown Logic
         const timerDisplay = document.getElementById("timerDisplay");
         const lockScreen = document.getElementById("lockScreen");
+        const catBannerWrapper = document.getElementById("catBannerWrapper");
         const mainContent = document.getElementById("mainContent");
-        const dropBanner = document.getElementById("dropBanner");
         const bgAudio = document.getElementById("bgAudio");
 
-        const countdownInterval = setInterval(() => {
+        const countdown = setInterval(() => {
             const now = new Date().getTime();
             const diff = targetDate - now;
 
             if (diff <= 0) {
-                clearInterval(countdownInterval);
+                clearInterval(countdown);
                 unlockWebsite();
             } else {
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
-                timerDisplay.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+                timerDisplay.innerText = `${d}d ${h}h ${m}m ${s}s`;
             }
         }, 1000);
 
@@ -504,79 +463,63 @@
             setTimeout(() => {
                 lockScreen.style.visibility = "hidden";
                 
-                // Show Drop Banner first
-                dropBanner.classList.add("drop");
+                // Cat drops banner
+                catBannerWrapper.classList.add("drop");
 
-                // Banner stays 4 seconds and then flies up away
+                // Holds banner for 10 seconds then lifts it up
                 setTimeout(() => {
-                    dropBanner.classList.remove("drop");
-                    dropBanner.classList.add("fly-up");
+                    catBannerWrapper.classList.remove("drop");
+                    catBannerWrapper.classList.add("lift-up");
 
-                    // Show main website page & start fireworks
+                    // Reveal Main Page & Trigger 5s Fireworks
                     mainContent.style.display = "block";
                     setTimeout(() => { mainContent.style.opacity = "1"; }, 50);
 
-                    // Audio & Fireworks Trigger
                     bgAudio.play().catch(e => console.log(e));
-                    triggerFireworksBurst();
+                    trigger5SecFireworks();
 
-                }, 4000);
+                }, 10000);
 
-            }, 1000);
+            }, 800);
         }
 
-        // Rotating Billboard Text every 30 seconds
-        const billboardText = document.getElementById("billboardText");
-        let toggleState = false;
-        setInterval(() => {
-            billboardText.style.opacity = "0";
-            setTimeout(() => {
-                toggleState = !toggleState;
-                billboardText.innerText = toggleState ? "আজও ভালবাসি তোমায়" : "HAPPY BIRTHDAY SAJIA";
-                billboardText.style.opacity = "1";
-            }, 800);
-        }, 30000);
-
-        // Render 10 Photo Cards
-        const photos = [
-            { img: "https://via.placeholder.com/400x300/ff3366/ffffff?text=Photo+1", note: "তোর প্রথম মিষ্টি হাসির মুহূর্ত।" },
-            { img: "https://via.placeholder.com/400x300/00d4ff/ffffff?text=Photo+2", note: "একসাথে কাটানো বিকেলের স্মৃতি।" },
-            { img: "https://via.placeholder.com/400x300/ffdf00/ffffff?text=Photo+3", note: "তোর অভিমানী চেহারাটা বড্ড প্রিয় ছিল।" },
-            { img: "https://via.placeholder.com/400x300/00ff88/ffffff?text=Photo+4", note: "যেখান থেকেই তোকে দেখি, সব সুন্দর।" },
-            { img: "https://via.placeholder.com/400x300/ff3366/ffffff?text=Photo+5", note: "তোর চোখের সেই চাহনিটা আজও ভুলিনি।" },
-            { img: "https://via.placeholder.com/400x300/7928ca/ffffff?text=Photo+6", note: "তুই ছিলিস আমার সব গল্পের কেন্দ্রবিন্দু।" },
-            { img: "https://via.placeholder.com/400x300/00d4ff/ffffff?text=Photo+7", note: "তোর সুরের মতো কণ্ঠটা আজও মনে বাজে।" },
-            { img: "https://via.placeholder.com/400x300/ffdf00/ffffff?text=Photo+8", note: "শুভ হোক তোর ভবিষ্যতের প্রতিটা ধাপ।" },
-            { img: "https://via.placeholder.com/400x300/00ff88/ffffff?text=Photo+9", note: "তোর হাসিতেই আমার পৃথিবীর আলো।" },
-            { img: "https://via.placeholder.com/400x300/ff3366/ffffff?text=Photo+10", note: "আই লাভ ইউ সাজিয়া—আজ এবং সারাজীবন।" }
+        // 10 Photos with 10 Notes Data
+        const photoGallery = [
+            { img: "https://via.placeholder.com/400x300/ff2a6d/ffffff?text=Photo+1", note: "১. তোর সেই মিষ্টি হাসিটা আজও সেরা।" },
+            { img: "https://via.placeholder.com/400x300/05d9e8/ffffff?text=Photo+2", note: "২. একসাথে কাটানো সুন্দর বিকেলগুলোর স্মৃতি।" },
+            { img: "https://via.placeholder.com/400x300/ffdf00/ffffff?text=Photo+3", note: "৩. তোর প্রতিটি কথা আমার খুব পছন্দের।" },
+            { img: "https://via.placeholder.com/400x300/00ff88/ffffff?text=Photo+4", note: "৪. অভিমানী রূপটাতে তোকে সবচেয়ে সুন্দর লাগতো।" },
+            { img: "https://via.placeholder.com/400x300/ff2a6d/ffffff?text=Photo+5", note: "৫. তোর স্বপ্নগুলো সত্যি হোক সবসময়।" },
+            { img: "https://via.placeholder.com/400x300/7928ca/ffffff?text=Photo+6", note: "৬. দূরত্ব বাড়লেও ভালোবাসা কমেনি।" },
+            { img: "https://via.placeholder.com/400x300/05d9e8/ffffff?text=Photo+7", note: "৭. তোর সাথে কাটানো সময়গুলো অমূল্য।" },
+            { img: "https://via.placeholder.com/400x300/ffdf00/ffffff?text=Photo+8", note: "৮. ভালো থাকিস তুই নিজের মতো করে।" },
+            { img: "https://via.placeholder.com/400x300/00ff88/ffffff?text=Photo+9", note: "৯. জীবনের প্রতিটি ধাপে সফলতা আসুক।" },
+            { img: "https://via.placeholder.com/400x300/ff2a6d/ffffff?text=Photo+10", note: "১০. আই লাভ ইউ সাজিয়া—আজ এবং সারাজীবন।" }
         ];
 
         const galleryGrid = document.getElementById("galleryGrid");
-        photos.forEach((item, idx) => {
+        photoGallery.forEach((item, idx) => {
             const card = document.createElement("div");
-            card.className = "gallery-card ios-glass";
+            card.className = "photo-card ios26-glass";
             card.onclick = () => openImageModal(item.img, `Memory #${idx + 1}`, item.note);
-            card.innerHTML = `
-                <img src="${item.img}" alt="Memory ${idx + 1}">
-                <p>${item.note}</p>
-            `;
+            card.innerHTML = `<img src="${item.img}" alt="Sajia Memory"><p>${item.note}</p>`;
             galleryGrid.appendChild(card);
         });
 
-        // Modal Functions
-        function openTextModal(title, body) {
+        // Modals
+        function openModal(title, text) {
             document.getElementById("modalImg").style.display = "none";
             document.getElementById("modalTitle").innerText = title;
-            document.getElementById("modalBody").innerText = body;
+            document.getElementById("modalBody").innerText = text;
             document.getElementById("modalWindow").classList.add("active");
         }
 
-        function openImageModal(imgSrc, title, body) {
-            const imgElem = document.getElementById("modalImg");
-            imgElem.src = imgSrc;
-            imgElem.style.display = "block";
+        function openImageModal(src, title, text) {
+            const img = document.getElementById("modalImg");
+            img.src = src;
+            img.style.display = "block";
             document.getElementById("modalTitle").innerText = title;
-            document.getElementById("modalBody").innerText = body;
+            document.getElementById("modalBody").innerText = text;
             document.getElementById("modalWindow").classList.add("active");
         }
 
